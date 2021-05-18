@@ -1,0 +1,15 @@
+examples
+node_modules
+src
+.eslintrc.js
+license.js
+babel.config.json
+.browserslistrc
+.gitignore
+
+#build tools
+build
+.vscode
+
+#definition
+!dist/src
