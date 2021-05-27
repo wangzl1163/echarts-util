@@ -1,6 +1,7 @@
 examples
 node_modules
 src
+test
 .eslintrc.js
 license.js
 babel.config.json
