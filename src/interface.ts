@@ -34,7 +34,7 @@ interface ExtraConfig {
  * 单个系列的配置
  * @param {string|any} title 标题组件，包含主标题和副标题。
  * @param {string} type series类型
- * @param {Array} data series数据
+ * @param {Array} data series数据，值格式：[[[x], [y], [其他维度的值], ...], ...]
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
@@ -90,14 +90,14 @@ interface RadarSeriesItemData {
 /**
  * 雷达图配置
  * @param {string|any} title 标题组件，包含主标题和副标题。
- * @param {Array} legends 图例的项
+ * @param {Array} legend 图例的项
  * @param {Array} indicator 雷达图的指示器，值格式：[{name:''},...]
  * @param {Array} data series数据，值格式：[[[x], [y], [其他维度的值], ...], ...]
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
 export interface SingleSeriesRadarType extends SingleSeriesType {
-   legends: string[];
+   legend: string[];
    indicator: {name: string;}[];
    data: RadarSeriesItemData[];
 }
