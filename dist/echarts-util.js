@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.0.0 - 26/05/2021
+ * @license :echarts-util - V1.0.0 - 27/05/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -565,6 +565,7 @@ const splitLine = {
 
 const defaultConfig = {
   config: {
+    color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
     title: {
       left: 40,
       textStyle: {
@@ -589,30 +590,39 @@ const defaultConfig = {
  * @param {SingleSeries} singleSeriesOption 单个series的配置
  */
 
-const createOption = (singleSeriesOptions = {
-  title: '',
-  type: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
-  const title = formatTitle(singleSeriesOptions.title);
-  const config = { ...singleSeriesOptions.extraConfig.config,
+const createOption = singleSeriesOptions => {
+  const {
+    title = '',
+    type = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = singleSeriesOptions;
+  const formattedTitle = formatTitle(title);
+  const config = { ...extraConfig.config,
+    color: colors.length ? colors : defaultConfig.config.color,
+    xAxis: {
+      type: 'category',
+      ...extraConfig.config.xAxis
+    },
+    yAxis: {
+      type: 'value',
+      ...extraConfig.config.yAxis
+    },
     title: { ...defaultConfig.config.title,
-      ...title
+      ...formattedTitle
     },
     textStyle: { ...defaultConfig.config.textStyle,
-      ...(singleSeriesOptions.extraConfig.config.textStyle || {})
+      ...(extraConfig.config.textStyle || {})
     },
-    color: singleSeriesOptions.colors,
     series: [{
-      type: singleSeriesOptions.type,
-      data: singleSeriesOptions.data,
+      type: type,
+      data: data,
       ...defaultConfig.seriesItemConfig,
-      ...singleSeriesOptions.extraConfig.seriesItemConfig
+      ...extraConfig.seriesItemConfig
     }]
   };
   return config;
@@ -622,19 +632,20 @@ const createOption = (singleSeriesOptions = {
  * @param {SingleSeriesPieType} pieOptions 饼图的配置
  */
 
-const createPieOption = (pieOptions = {
-  title: '',
-  data: [],
-  colors: [],
-  radius: ['75%', '100%'],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
+const createPieOption = pieOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    radius = ['75%', '100%'],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = pieOptions;
   const seriesItemConfig = {
-    radius: pieOptions.radius,
-    ...pieOptions.extraConfig.seriesItemConfig
+    radius,
+    ...extraConfig.seriesItemConfig
   }; // 图例
 
   const legend = {
@@ -646,15 +657,15 @@ const createPieOption = (pieOptions = {
     textStyle: {
       color: '#666666'
     },
-    ...(pieOptions.extraConfig.config.legend || {})
+    ...(extraConfig.config.legend || {})
   };
   return createOption({
     type: 'pie',
-    title: pieOptions.title,
-    data: pieOptions.data,
-    colors: pieOptions.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
-      config: { ...pieOptions.extraConfig.config,
+      config: { ...extraConfig.config,
         legend
       },
       seriesItemConfig
@@ -666,16 +677,17 @@ const createPieOption = (pieOptions = {
  * @param {SingleSeriesLineType} lineOptions 折线图的配置
  */
 
-const createLineOption = (lineOptions = {
-  title: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
-  const config = {
+const createLineOption = lineOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = lineOptions;
+  const config = { ...extraConfig.config,
     tooltip: {
       show: true,
       trigger: 'axis',
@@ -685,16 +697,16 @@ const createLineOption = (lineOptions = {
         const valueStr = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(params).call(params, param => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>');
 
         return `${timeStr}<br/>${valueStr}`;
-      }
+      },
+      ...extraConfig.config.tooltip
     },
-    ...lineOptions.extraConfig.config,
     grid: {
       top: 50,
       left: 0,
       right: 25,
       bottom: 0,
       containLabel: true,
-      ...(lineOptions.extraConfig.config.grid || {})
+      ...(extraConfig.config.grid || {})
     },
     xAxis: {
       type: 'time',
@@ -707,7 +719,7 @@ const createLineOption = (lineOptions = {
           ...splitLine.lineStyle
         }
       },
-      ...(lineOptions.extraConfig.config.xAxis || {})
+      ...(extraConfig.config.xAxis || {})
     },
     yAxis: {
       type: 'value',
@@ -716,19 +728,19 @@ const createLineOption = (lineOptions = {
         ...axisLine
       },
       splitLine,
-      ...(lineOptions.extraConfig.config.yAxis || {})
+      ...(extraConfig.config.yAxis || {})
     }
   };
   return createOption({
     type: 'line',
-    title: lineOptions.title,
-    data: lineOptions.data,
-    colors: lineOptions.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
       config,
       seriesItemConfig: {
         symbol: 'none',
-        ...lineOptions.extraConfig.seriesItemConfig
+        ...extraConfig.seriesItemConfig
       }
     }
   });
@@ -738,15 +750,16 @@ const createLineOption = (lineOptions = {
  * @param {SingleSeriesBarType} barOptions 柱状图的配置
  */
 
-const createBarOption = (barOptions = {
-  title: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
+const createBarOption = barOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = barOptions;
   const axisLine = {
     lineStyle: {
       color: '#979797'
@@ -758,14 +771,14 @@ const createBarOption = (barOptions = {
       type: 'dashed'
     }
   };
-  const config = { ...barOptions.extraConfig.config,
+  const config = { ...extraConfig.config,
     grid: {
       top: 28,
       left: 0,
       right: 0,
       bottom: 0,
       containLabel: true,
-      ...(barOptions.extraConfig.config.grid || {})
+      ...(extraConfig.config.grid || {})
     },
     xAxis: {
       type: 'category',
@@ -774,7 +787,7 @@ const createBarOption = (barOptions = {
         show: false,
         ...splitLine
       },
-      ...(barOptions.extraConfig.config.xAxis || {})
+      ...(extraConfig.config.xAxis || {})
     },
     yAxis: {
       type: 'value',
@@ -784,17 +797,17 @@ const createBarOption = (barOptions = {
         ...axisLine
       },
       splitLine,
-      ...(barOptions.extraConfig.config.yAxis || {})
+      ...(extraConfig.config.yAxis || {})
     }
   };
   return createOption({
     type: 'bar',
-    title: barOptions.title,
-    data: barOptions.data,
-    colors: barOptions.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
       config,
-      seriesItemConfig: barOptions.extraConfig.seriesItemConfig
+      seriesItemConfig: extraConfig.seriesItemConfig
     }
   });
 };
@@ -803,21 +816,22 @@ const createBarOption = (barOptions = {
  * @param radarOptions 雷达图的配置
  */
 
-const createRadarOption = (radarOptions = {
-  title: '',
-  legends: [],
-  indicator: [],
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
-  const config = { ...radarOptions.extraConfig.config,
+const createRadarOption = radarOptions => {
+  const {
+    title = '',
+    legend = [],
+    indicator = [],
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = radarOptions;
+  const config = { ...extraConfig.config,
     legend: {
-      data: radarOptions.legends,
-      ...(radarOptions.extraConfig.config.legend || {})
+      data: legend,
+      ...(extraConfig.config.legend || {})
     },
     radar: {
       axisLine: {
@@ -827,17 +841,17 @@ const createRadarOption = (radarOptions = {
         }
       },
       splitLine,
-      indicator: radarOptions.indicator
+      indicator
     }
   };
   return createOption({
     type: 'radar',
-    title: radarOptions.title,
-    data: radarOptions.data,
-    colors: radarOptions.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
       config,
-      seriesItemConfig: radarOptions.extraConfig.seriesItemConfig
+      seriesItemConfig: extraConfig.seriesItemConfig
     }
   });
 };
@@ -846,19 +860,20 @@ const createRadarOption = (radarOptions = {
  * @param multiSeriesOption 多个series的配置
  */
 
-const createMultiOption = (multiSeriesOption = {
-  title: '',
-  type: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
-  var _context, _context2, _context3;
+const createMultiOption = multiSeriesOption => {
+  var _context, _context2;
 
-  const title = formatTitle(multiSeriesOption.title);
+  const {
+    title = '',
+    type = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = multiSeriesOption;
+  const formattedTitle = formatTitle(title);
   const xAxis = {
     axisLine,
     splitLine: {
@@ -867,8 +882,7 @@ const createMultiOption = (multiSeriesOption = {
         type: 'dashed',
         ...splitLine.lineStyle
       }
-    },
-    ...(multiSeriesOption.extraConfig.config.xAxis || {})
+    }
   };
   const yAxis = {
     boundaryGap: false,
@@ -876,16 +890,14 @@ const createMultiOption = (multiSeriesOption = {
       show: true,
       ...axisLine
     },
-    splitLine,
-    ...(multiSeriesOption.extraConfig.config.yAxis || {})
+    splitLine
   };
-  const config = { ...multiSeriesOption.extraConfig.config,
+  const config = { ...extraConfig.config,
     title: { ...defaultConfig.config.title,
-      ...(multiSeriesOption.extraConfig.config.title || {}),
-      ...title
+      ...formattedTitle
     },
     textStyle: { ...defaultConfig.config.textStyle,
-      ...(multiSeriesOption.extraConfig.config.textStyle || {})
+      ...(extraConfig.config.textStyle || {})
     },
     tooltip: {
       show: true,
@@ -897,7 +909,7 @@ const createMultiOption = (multiSeriesOption = {
 
         return `${timeStr}<br/>${valueStr}`;
       },
-      ...(multiSeriesOption.extraConfig.config.tooltip || {})
+      ...(extraConfig.config.tooltip || {})
     },
     legend: {
       icon: 'react',
@@ -908,19 +920,21 @@ const createMultiOption = (multiSeriesOption = {
       textStyle: {
         color: '#666666'
       },
-      ...(multiSeriesOption.extraConfig.config.legend || {})
+      ...(extraConfig.config.legend || {})
     },
-    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(multiSeriesOption.extraConfig.config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context = multiSeriesOption.extraConfig.config.xAxis).call(_context, item => ({ ...item,
-      ...xAxis
+    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(extraConfig.config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context = extraConfig.config.xAxis).call(_context, item => ({ ...xAxis,
+      ...item
     })) : {
       type: 'category',
-      ...xAxis
+      ...xAxis,
+      ...(extraConfig.config.xAxis || {})
     },
-    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(multiSeriesOption.extraConfig.config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = multiSeriesOption.extraConfig.config.yAxis).call(_context2, item => ({ ...item,
-      ...yAxis
+    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(extraConfig.config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = extraConfig.config.yAxis).call(_context2, item => ({ ...yAxis,
+      ...item
     })) : {
       type: 'value',
-      ...yAxis
+      ...yAxis,
+      ...(extraConfig.config.yAxis || {})
     },
     grid: {
       top: 28,
@@ -928,15 +942,15 @@ const createMultiOption = (multiSeriesOption = {
       right: 0,
       bottom: 0,
       containLabel: true,
-      ...(multiSeriesOption.extraConfig.config.grid || {})
+      ...(extraConfig.config.grid || {})
     }
   };
 
-  const handledSeries = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context3 = multiSeriesOption.data).call(_context3, item => {
-    const itemConfig = typeof multiSeriesOption.extraConfig.seriesItemConfig === 'function' ? multiSeriesOption.extraConfig.seriesItemConfig(item) || {} : multiSeriesOption.extraConfig.seriesItemConfig;
+  const handledSeries = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(data).call(data, item => {
+    const itemConfig = typeof extraConfig.seriesItemConfig === 'function' ? extraConfig.seriesItemConfig(item) : extraConfig.seriesItemConfig;
     return {
       name: item.name,
-      type: item.type || multiSeriesOption.type,
+      type: item.type || type,
       label: {
         show: false
       },
@@ -947,7 +961,7 @@ const createMultiOption = (multiSeriesOption = {
   });
 
   return { ...config,
-    color: multiSeriesOption.colors,
+    color: colors.length ? colors : defaultConfig.config.color,
     series: handledSeries
   };
 };
@@ -956,25 +970,26 @@ const createMultiOption = (multiSeriesOption = {
  * @param multiLineOption 多条折线的配置
  */
 
-const createMultiLineOption = (multiLineOption = {
-  title: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
+const createMultiLineOption = multiLineOption => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = multiLineOption;
   return createMultiOption({
     type: 'line',
-    title: multiLineOption.title,
-    data: multiLineOption.data,
-    colors: multiLineOption.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
-      config: multiLineOption.extraConfig.config,
+      config: extraConfig.config,
       seriesItemConfig: {
         symbol: 'none',
-        ...multiLineOption.extraConfig.seriesItemConfig
+        ...extraConfig.seriesItemConfig
       }
     }
   });
@@ -984,25 +999,26 @@ const createMultiLineOption = (multiLineOption = {
  * @param multiBarOptions 多个柱状图的配置
  */
 
-const createMultiBarOption = (multiBarOptions = {
-  title: '',
-  data: [],
-  colors: [],
-  extraConfig: {
-    config: {},
-    seriesItemConfig: {}
-  }
-}) => {
+const createMultiBarOption = multiBarOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig = {
+      config: {},
+      seriesItemConfig: {}
+    }
+  } = multiBarOptions;
   return createMultiOption({
     type: 'bar',
-    title: multiBarOptions.title,
-    data: multiBarOptions.data,
-    colors: multiBarOptions.colors,
+    title: title,
+    data: data,
+    colors: colors,
     extraConfig: {
-      config: multiBarOptions.extraConfig.config,
+      config: extraConfig.config,
       seriesItemConfig: {
         symbol: 'none',
-        ...multiBarOptions.extraConfig.seriesItemConfig
+        ...extraConfig.seriesItemConfig
       }
     }
   });
