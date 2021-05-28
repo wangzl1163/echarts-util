@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createMultiOption</title>
+</head>
+
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="line" style="width: 600px;height:400px;"></div>
+	<div id="bar" style="width: 600px;height:400px;"></div>
+	<div id="horizontal-bar" style="width: 600px;height:400px;"></div>
+	<div id="stack-horizontal-bar" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+
+		//#region line chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('line'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createMultiOption({
+			title: 'ECharts 堆叠折线图 示例',
+			type: 'line',
+			data: [
+				{
+					name: '邮件营销',
+					data: [['周一', 120], ['周二', 132], ['周三', 101], ['周四', 134], ['周五', 90], ['周六', 230], ['周日', 210]]
+				},
+				{
+					name: '联盟广告',
+					data: [['周一', 220], ['周二', 182], ['周三', 191], ['周四', 234], ['周五', 290], ['周六', 330], ['周日', 310]]
+				},
+				{
+					name: '视频广告',
+					data: [['周一', 150], ['周二', 232], ['周三', 201], ['周四', 154], ['周五', 190], ['周六', 330], ['周日', 410]]
+				},
+				{
+					name: '直接访问',
+					data: [['周一', 320], ['周二', 332], ['周三', 301], ['周四', 334], ['周五', 390], ['周六', 330], ['周日', 320]]
+				},
+				{
+					name: '搜索引擎',
+					data: [['周一', 820], ['周二', 932], ['周三', 901], ['周四', 934], ['周五', 1290], ['周六', 1330], ['周日', 1320]]
+				}
+			]
+		});
+
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+
+		//#region bar chart
+		var barChart = echarts.init(document.getElementById('bar'));
+		var barOption = util.createMultiOption({
+			title: 'ECharts 柱状图 示例',
+			type: 'bar',
+			data: [
+				{
+					name: '2011年',
+					data: [['巴西', 18203], ['印尼', 23489], ['美国', 29034], ['印度', 104970], ['中国', 131744], ['世界人口（万）', 630230]]
+				},
+				{
+					name: '2012年',
+					data: [['巴西', 19325], ['印尼', 23438], ['美国', 31000], ['印度', 121594], ['中国', 134141], ['世界人口（万）', 681807]]
+				}
+			],
+			extraConfig: {
+				seriesItemConfig: {
+					barWidth: 16
+				}
+			}
+		});
+		barChart.setOption(barOption);
+		//#endregion
+
+		//#region horizontal bar chart
+		var horizontalBarChart = echarts.init(document.getElementById('horizontal-bar'));
+		var horizontalBarOption = util.createMultiOption({
+			title: 'ECharts 水平柱状图 示例',
+			type: 'bar',
+			data: [
+				{
+					name: '2011年',
+					data: [[18203, '巴西'], [23489, '印尼'], [29034, '美国'], [104970, '印度'], [131744, '中国'], [630230, '世界人口（万）']]
+				},
+				{
+					name: '2012年',
+					data: [[19325, '巴西'], [23438, '印尼'], [31000, '美国'], [121594, '印度'], [134141, '中国'], [681807, '世界人口（万）']]
+				}
+			],
+			extraConfig: {
+				config: {
+					xAxis: {
+						type: 'value'
+					},
+					yAxis: {
+						type: 'category'
+					},
+					grid: {
+						right: 30
+					}
+				},
+				seriesItemConfig: {
+					barWidth: 16
+				}
+			}
+		});
+		horizontalBarChart.setOption(horizontalBarOption);
+		//#endregion
+
+		//#region stack horizontal bar chart
+		var stackHorizontalBarChart = echarts.init(document.getElementById('stack-horizontal-bar'));
+		var stackHorizontalBarOption = util.createMultiOption({
+			title: 'ECharts 水平堆叠柱状图 示例',
+			type: 'bar',
+			data: [
+				{
+					name: 'Direct',
+					data: [[320,'Mon'],[302,'Tue'],[301,'Wed'],[334,'Thu'],[390,'Fri'],[330,'Sat'],[320,'Sun']]
+				},
+				{
+					name: 'Mail Ad',
+					data: [[120,'Mon'], [132,'Tue'], [101, 'Wed'], [134, 'Thu'], [90, 'Fri'], [230, 'Sat'], [210, 'Sun']]
+				},
+				{
+					name: 'Affiliate Ad',
+					data: [[220,'Mon'], [182,'Tue'], [191, 'Wed'], [234, 'Thu'], [290, 'Fri'], [330, 'Sat'], [310, 'Sun']]
+				},
+				{
+					name: 'Video Ad',
+					data: [[150,'Mon'], [212,'Tue'], [201, 'Wed'], [154, 'Thu'], [190, 'Fri'], [330, 'Sat'], [410, 'Sun']]
+				},
+				{
+					name: 'Search Engine',
+					data: [[820,'Mon'], [832,'Tue'], [901, 'Wed'], [934, 'Thu'], [1290, 'Fri'], [1330, 'Sat'], [1320, 'Sun']]
+				}
+			],
+			extraConfig: {
+				config: {
+					xAxis: {
+						type: 'value'
+					},
+					yAxis: {
+						type: 'category'
+					},
+					grid: {
+						right: 16
+					}
+				},
+				seriesItemConfig: {
+					stack: 'total',
+					label: {
+						show: true
+					}
+				}
+			}
+		});
+		stackHorizontalBarChart.setOption(stackHorizontalBarOption, true);
+		//#endregion
+	</script>
+</body>
+
+</html>

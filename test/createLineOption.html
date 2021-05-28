@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createLineOption</title>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height:400px;"></div>
+	<div id="smooth-line" style="width: 600px;height:400px;"></div>
+	<div id="area-line" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+		console.log('----- util: ',util);
+
+		//#region main chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('main'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createLineOption({
+			title: 'ECharts basic line 示例',
+			data: [['Mon', 150], ['Tue',230], ['Wed',224], ['Thu',218], ['Fri',135], ['Sat',147], ['Sun',260]]
+		});
+
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+
+		//#region smooth line chart
+		var smoothLineChart = echarts.init(document.getElementById('smooth-line'));
+		var smoothLineOption = util.createLineOption({
+			title: 'ECharts 平滑折线 示例',
+			data: [['Mon', 150], ['Tue',230], ['Wed',224], ['Thu',218], ['Fri',135], ['Sat',147], ['Sun',260]],
+			extraConfig: {
+				seriesItemConfig: {
+					smooth: true
+				}
+			}
+		});
+		smoothLineChart.setOption(smoothLineOption);
+		//#endregion
+
+		//#region area line chart
+		var areaLineChart = echarts.init(document.getElementById('area-line'));
+		var areaLineOption = util.createLineOption({
+			title: 'ECharts 面积图 示例',
+			data: [['Mon', 150], ['Tue',230], ['Wed',224], ['Thu',218], ['Fri',135], ['Sat',147], ['Sun',260]],
+			extraConfig: {
+				seriesItemConfig: {
+					areaStyle: {}
+				}
+			}
+		});
+		areaLineChart.setOption(areaLineOption);
+		//#endregion
+	</script>
+</body>
+</html>

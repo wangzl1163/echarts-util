@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createPieOption</title>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height:400px;"></div>
+	<div id="circle-pie" style="width: 600px;height:400px;"></div>
+	<div id="radius-circle-pie" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+
+		//#region main chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('main'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createPieOption({
+			title: 'ECharts 饼图 示例',
+			data: [
+					 {value: 1048, name: '搜索引擎'},
+                {value: 735, name: '直接访问'},
+                {value: 580, name: '邮件营销'},
+                {value: 484, name: '联盟广告'},
+                {value: 300, name: '视频广告'}
+			]
+		});
+
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+
+		//#region circle pie chart
+		var circlePieChart = echarts.init(document.getElementById('circle-pie'));
+		var circlePieOption = util.createPieOption({
+			title: 'ECharts 环形饼图 示例',
+			radius: ['50%', '75%'],
+			data: [
+					 {value: 1048, name: '搜索引擎'},
+                {value: 735, name: '直接访问'},
+                {value: 580, name: '邮件营销'},
+                {value: 484, name: '联盟广告'},
+                {value: 300, name: '视频广告'}
+			]
+		});
+		circlePieChart.setOption(circlePieOption);
+		//#endregion
+
+		//#region radius circle pie chart
+		var radiusCirclePieChart = echarts.init(document.getElementById('radius-circle-pie'));
+		var radiusCirclePieOption = util.createPieOption({
+			title: 'ECharts 圆角环形饼图 示例',
+			radius: ['50%', '75%'],
+			data: [
+					 {value: 1048, name: '搜索引擎'},
+                {value: 735, name: '直接访问'},
+                {value: 580, name: '邮件营销'},
+                {value: 484, name: '联盟广告'},
+                {value: 300, name: '视频广告'}
+			],
+			extraConfig: {
+				seriesItemConfig: {
+					itemStyle: {
+						borderRadius: 10,
+						borderColor: '#fff',
+						borderWidth: 2
+					}
+				}
+			}
+		});
+		radiusCirclePieChart.setOption(radiusCirclePieOption);
+		//#endregion
+	</script>
+</body>
+</html>

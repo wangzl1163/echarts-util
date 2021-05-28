@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createBarOption</title>
+</head>
+
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height:400px;"></div>
+	<div id="bgColor-bar" style="width: 600px;height:400px;"></div>
+	<div id="align-axis-bar" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+
+		//#region main chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('main'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createBarOption({
+			title: 'ECharts 柱状图 示例',
+			data: [['衬衫', 5], ['羊毛衫', 20], ['雪纺衫', 36], ['裤子', 10], ['高跟鞋', 10], ['袜子', 20]]
+		});
+
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+
+		//#region background color chart
+		var bgColorChart = echarts.init(document.getElementById('bgColor-bar'));
+		var bgColorOption = util.createBarOption({
+			title: 'ECharts 带背景色的柱状图 示例',
+			data: [['衬衫', 5], ['羊毛衫', 20], ['雪纺衫', 36], ['裤子', 10], ['高跟鞋', 10], ['袜子', 20]],
+			extraConfig: {
+				seriesItemConfig: {
+					showBackground: true,
+					backgroundStyle: {
+						color: 'rgba(180, 180, 180, 0.2)'
+					}
+				}
+			}
+		});
+		bgColorChart.setOption(bgColorOption);
+		//#endregion
+
+		//#region align axis chart
+		var alignAxisChart = echarts.init(document.getElementById('align-axis-bar'));
+		var alignAxisOption = util.createBarOption({
+			title: 'ECharts 坐标刻度与标签对齐的柱状图 示例',
+			data: [['衬衫', 5], ['羊毛衫', 20], ['雪纺衫', 36], ['裤子', 10], ['高跟鞋', 10], ['袜子', 20]],
+			extraConfig: {
+				config: {
+					xAxis: {
+						axisTick: {
+							alignWithLabel: true
+						}
+					}
+				},
+				seriesItemConfig: {
+					showBackground: true,
+					backgroundStyle: {
+						color: 'rgba(180, 180, 180, 0.2)'
+					}
+				}
+			}
+		});
+		alignAxisChart.setOption(alignAxisOption);
+		//#endregion
+	</script>
+</body>
+
+</html>
