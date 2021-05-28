@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.0.0 - 27/05/2021
+ * @license :echarts-util - V1.0.0 - 28/05/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -118,10 +118,16 @@ module.exports =
   // eslint-disable-next-line no-new-func -- fallback
   (function () { return this; })() || Function('return this')();
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(27)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(35)))
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(31);
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -134,72 +140,24 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(23);
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(1);
-
-// Detect IE8's incomplete defineProperty implementation
-module.exports = !fails(function () {
-  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
-});
-
+module.exports = __webpack_require__(59);
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toObject = __webpack_require__(14);
-
-var hasOwnProperty = {}.hasOwnProperty;
-
-module.exports = function hasOwn(it, key) {
-  return hasOwnProperty.call(toObject(it), key);
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(50);
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var global = __webpack_require__(0);
-var getOwnPropertyDescriptor = __webpack_require__(28).f;
-var isForced = __webpack_require__(32);
-var path = __webpack_require__(5);
-var bind = __webpack_require__(16);
-var createNonEnumerableProperty = __webpack_require__(17);
-var has = __webpack_require__(6);
+var getOwnPropertyDescriptor = __webpack_require__(36).f;
+var isForced = __webpack_require__(39);
+var path = __webpack_require__(7);
+var bind = __webpack_require__(20);
+var createNonEnumerableProperty = __webpack_require__(21);
+var has = __webpack_require__(12);
 
 var wrapConstructor = function (NativeConstructor) {
   var Wrapper = function (a, b, c) {
@@ -293,7 +251,115 @@ module.exports = function (options, source) {
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__(2);
+
+// Detect IE8's incomplete defineProperty implementation
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+});
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var path = __webpack_require__(7);
+
+module.exports = function (CONSTRUCTOR) {
+  return path[CONSTRUCTOR + 'Prototype'];
+};
+
+
+/***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var shared = __webpack_require__(50);
+var has = __webpack_require__(12);
+var uid = __webpack_require__(54);
+var NATIVE_SYMBOL = __webpack_require__(24);
+var USE_SYMBOL_AS_UID = __webpack_require__(57);
+
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+    if (NATIVE_SYMBOL && has(Symbol, name)) {
+      WellKnownSymbolsStore[name] = Symbol[name];
+    } else {
+      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+    }
+  } return WellKnownSymbolsStore[name];
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toObject = __webpack_require__(18);
+
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function hasOwn(it, key) {
+  return hasOwnProperty.call(toObject(it), key);
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(68);
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -307,11 +373,24 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 10 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(1);
-var classof = __webpack_require__(11);
+// toObject with fallback for non-array-like ES3 strings
+var IndexedObject = __webpack_require__(16);
+var requireObjectCoercible = __webpack_require__(11);
+
+module.exports = function (it) {
+  return IndexedObject(requireObjectCoercible(it));
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__(2);
+var classof = __webpack_require__(10);
 
 var split = ''.split;
 
@@ -326,33 +405,10 @@ module.exports = fails(function () {
 
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-// `RequireObjectCoercible` abstract operation
-// https://tc39.es/ecma262/#sec-requireobjectcoercible
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(4);
+var isObject = __webpack_require__(5);
 
 // `ToPrimitive` abstract operation
 // https://tc39.es/ecma262/#sec-toprimitive
@@ -369,10 +425,10 @@ module.exports = function (input, PREFERRED_STRING) {
 
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var requireObjectCoercible = __webpack_require__(12);
+var requireObjectCoercible = __webpack_require__(11);
 
 // `ToObject` abstract operation
 // https://tc39.es/ecma262/#sec-toobject
@@ -382,12 +438,12 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 15 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DESCRIPTORS = __webpack_require__(3);
-var fails = __webpack_require__(1);
-var createElement = __webpack_require__(31);
+var DESCRIPTORS = __webpack_require__(6);
+var fails = __webpack_require__(2);
+var createElement = __webpack_require__(38);
 
 // Thank's IE8 for his funny defineProperty
 module.exports = !DESCRIPTORS && !fails(function () {
@@ -399,10 +455,10 @@ module.exports = !DESCRIPTORS && !fails(function () {
 
 
 /***/ }),
-/* 16 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var aFunction = __webpack_require__(33);
+var aFunction = __webpack_require__(40);
 
 // optional / simple context binding
 module.exports = function (fn, that, length) {
@@ -429,12 +485,12 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 17 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DESCRIPTORS = __webpack_require__(3);
-var definePropertyModule = __webpack_require__(34);
-var createPropertyDescriptor = __webpack_require__(9);
+var DESCRIPTORS = __webpack_require__(6);
+var definePropertyModule = __webpack_require__(41);
+var createPropertyDescriptor = __webpack_require__(14);
 
 module.exports = DESCRIPTORS ? function (object, key, value) {
   return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
@@ -445,52 +501,41 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
 
 
 /***/ }),
-/* 18 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(11);
+var toInteger = __webpack_require__(23);
 
-// `IsArray` abstract operation
-// https://tc39.es/ecma262/#sec-isarray
-// eslint-disable-next-line es/no-array-isarray -- safe
-module.exports = Array.isArray || function isArray(arg) {
-  return classof(arg) == 'Array';
+var min = Math.min;
+
+// `ToLength` abstract operation
+// https://tc39.es/ecma262/#sec-tolength
+module.exports = function (argument) {
+  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
 };
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 23 */
+/***/ (function(module, exports) {
 
-var global = __webpack_require__(0);
-var shared = __webpack_require__(40);
-var has = __webpack_require__(6);
-var uid = __webpack_require__(44);
-var NATIVE_SYMBOL = __webpack_require__(20);
-var USE_SYMBOL_AS_UID = __webpack_require__(47);
+var ceil = Math.ceil;
+var floor = Math.floor;
 
-var WellKnownSymbolsStore = shared('wks');
-var Symbol = global.Symbol;
-var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
-
-module.exports = function (name) {
-  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
-    if (NATIVE_SYMBOL && has(Symbol, name)) {
-      WellKnownSymbolsStore[name] = Symbol[name];
-    } else {
-      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
-    }
-  } return WellKnownSymbolsStore[name];
+// `ToInteger` abstract operation
+// https://tc39.es/ecma262/#sec-tointeger
+module.exports = function (argument) {
+  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 };
 
 
 /***/ }),
-/* 20 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(21);
-var fails = __webpack_require__(1);
+var V8_VERSION = __webpack_require__(25);
+var fails = __webpack_require__(2);
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
@@ -502,11 +547,11 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 
 
 /***/ }),
-/* 21 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
-var userAgent = __webpack_require__(45);
+var userAgent = __webpack_require__(55);
 
 var process = global.process;
 var versions = process && process.versions;
@@ -528,747 +573,14 @@ module.exports = version && +version;
 
 
 /***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOption", function() { return createOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPieOption", function() { return createPieOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLineOption", function() { return createLineOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBarOption", function() { return createBarOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRadarOption", function() { return createRadarOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiOption", function() { return createMultiOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiLineOption", function() { return createMultiLineOption; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiBarOption", function() { return createMultiBarOption; });
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-const formatTitle = title => typeof title === 'string' ? {
-  text: title
-} : title;
-
-const axisLine = {
-  lineStyle: {
-    color: '#CCCCCC'
-  }
-};
-const splitLine = {
-  lineStyle: {
-    color: '#CCCCCC'
-  }
-}; // 默认配置
-
-const defaultConfig = {
-  config: {
-    color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
-    title: {
-      left: 40,
-      textStyle: {
-        fontFamily: 'Microsoft YaHei',
-        fontSize: 14,
-        fontWeight: 400
-      }
-    },
-    textStyle: {
-      color: '#333333'
-    }
-  },
-  seriesItemConfig: {
-    label: {
-      show: false
-    },
-    hoverAnimation: false
-  }
-};
-/**
- * 创建Echarts的options
- * @param {SingleSeries} singleSeriesOption 单个series的配置
- */
-
-const createOption = singleSeriesOptions => {
-  const {
-    title = '',
-    type = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = singleSeriesOptions;
-  const formattedTitle = formatTitle(title);
-  const config = { ...extraConfig.config,
-    color: colors.length ? colors : defaultConfig.config.color,
-    xAxis: {
-      type: 'category',
-      ...extraConfig.config.xAxis
-    },
-    yAxis: {
-      type: 'value',
-      ...extraConfig.config.yAxis
-    },
-    title: { ...defaultConfig.config.title,
-      ...formattedTitle
-    },
-    textStyle: { ...defaultConfig.config.textStyle,
-      ...(extraConfig.config.textStyle || {})
-    },
-    series: [{
-      type: type,
-      data: data,
-      ...defaultConfig.seriesItemConfig,
-      ...extraConfig.seriesItemConfig
-    }]
-  };
-  return config;
-};
-/**
- * 创建Echarts饼状图options，默认为环状饼图
- * @param {SingleSeriesPieType} pieOptions 饼图的配置
- */
-
-const createPieOption = pieOptions => {
-  const {
-    title = '',
-    data = [],
-    colors = [],
-    radius = ['75%', '100%'],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = pieOptions;
-  const seriesItemConfig = {
-    radius,
-    ...extraConfig.seriesItemConfig
-  }; // 图例
-
-  const legend = {
-    icon: 'react',
-    itemWidth: 8,
-    itemHeight: 8,
-    top: 0,
-    right: 0,
-    textStyle: {
-      color: '#666666'
-    },
-    ...(extraConfig.config.legend || {})
-  };
-  return createOption({
-    type: 'pie',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config: { ...extraConfig.config,
-        legend
-      },
-      seriesItemConfig
-    }
-  });
-};
-/**
- * 创建Echarts折线图options，默认为不带阴影面积的折线图
- * @param {SingleSeriesLineType} lineOptions 折线图的配置
- */
-
-const createLineOption = lineOptions => {
-  const {
-    title = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = lineOptions;
-  const config = { ...extraConfig.config,
-    tooltip: {
-      show: true,
-      trigger: 'axis',
-      formatter: function (params) {
-        const timeStr = params[0].value[0];
-
-        const valueStr = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(params).call(params, param => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>');
-
-        return `${timeStr}<br/>${valueStr}`;
-      },
-      ...extraConfig.config.tooltip
-    },
-    grid: {
-      top: 50,
-      left: 0,
-      right: 25,
-      bottom: 0,
-      containLabel: true,
-      ...(extraConfig.config.grid || {})
-    },
-    xAxis: {
-      type: 'time',
-      boundaryGap: false,
-      axisLine,
-      splitLine: {
-        show: false,
-        lineStyle: {
-          type: 'dashed',
-          ...splitLine.lineStyle
-        }
-      },
-      ...(extraConfig.config.xAxis || {})
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: {
-        show: false,
-        ...axisLine
-      },
-      splitLine,
-      ...(extraConfig.config.yAxis || {})
-    }
-  };
-  return createOption({
-    type: 'line',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config,
-      seriesItemConfig: {
-        symbol: 'none',
-        ...extraConfig.seriesItemConfig
-      }
-    }
-  });
-};
-/**
- * 创建Echarts柱状图options
- * @param {SingleSeriesBarType} barOptions 柱状图的配置
- */
-
-const createBarOption = barOptions => {
-  const {
-    title = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = barOptions;
-  const axisLine = {
-    lineStyle: {
-      color: '#979797'
-    }
-  };
-  const splitLine = {
-    lineStyle: {
-      color: '#EDEDED',
-      type: 'dashed'
-    }
-  };
-  const config = { ...extraConfig.config,
-    grid: {
-      top: 28,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      containLabel: true,
-      ...(extraConfig.config.grid || {})
-    },
-    xAxis: {
-      type: 'category',
-      axisLine,
-      splitLine: {
-        show: false,
-        ...splitLine
-      },
-      ...(extraConfig.config.xAxis || {})
-    },
-    yAxis: {
-      type: 'value',
-      boundaryGap: false,
-      axisLine: {
-        show: true,
-        ...axisLine
-      },
-      splitLine,
-      ...(extraConfig.config.yAxis || {})
-    }
-  };
-  return createOption({
-    type: 'bar',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config,
-      seriesItemConfig: extraConfig.seriesItemConfig
-    }
-  });
-};
-/**
- * 创建Echarts雷达图options
- * @param radarOptions 雷达图的配置
- */
-
-const createRadarOption = radarOptions => {
-  const {
-    title = '',
-    legend = [],
-    indicator = [],
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = radarOptions;
-  const config = { ...extraConfig.config,
-    legend: {
-      data: legend,
-      ...(extraConfig.config.legend || {})
-    },
-    radar: {
-      axisLine: {
-        lineStyle: {
-          type: 'dashed',
-          ...axisLine.lineStyle
-        }
-      },
-      splitLine,
-      indicator
-    }
-  };
-  return createOption({
-    type: 'radar',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config,
-      seriesItemConfig: extraConfig.seriesItemConfig
-    }
-  });
-};
-/**
- * 创建Echarts图中具有多个series的options
- * @param multiSeriesOption 多个series的配置
- */
-
-const createMultiOption = multiSeriesOption => {
-  var _context, _context2;
-
-  const {
-    title = '',
-    type = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = multiSeriesOption;
-  const formattedTitle = formatTitle(title);
-  const xAxis = {
-    axisLine,
-    splitLine: {
-      show: false,
-      lineStyle: {
-        type: 'dashed',
-        ...splitLine.lineStyle
-      }
-    }
-  };
-  const yAxis = {
-    boundaryGap: false,
-    axisLine: {
-      show: true,
-      ...axisLine
-    },
-    splitLine
-  };
-  const config = { ...extraConfig.config,
-    title: { ...defaultConfig.config.title,
-      ...formattedTitle
-    },
-    textStyle: { ...defaultConfig.config.textStyle,
-      ...(extraConfig.config.textStyle || {})
-    },
-    tooltip: {
-      show: true,
-      trigger: 'axis',
-      formatter: function (params) {
-        const timeStr = params[0].value[0];
-
-        const valueStr = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(params).call(params, param => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>');
-
-        return `${timeStr}<br/>${valueStr}`;
-      },
-      ...(extraConfig.config.tooltip || {})
-    },
-    legend: {
-      icon: 'react',
-      itemWidth: 8,
-      itemHeight: 8,
-      top: 0,
-      right: 0,
-      textStyle: {
-        color: '#666666'
-      },
-      ...(extraConfig.config.legend || {})
-    },
-    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(extraConfig.config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context = extraConfig.config.xAxis).call(_context, item => ({ ...xAxis,
-      ...item
-    })) : {
-      type: 'category',
-      ...xAxis,
-      ...(extraConfig.config.xAxis || {})
-    },
-    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_1___default()(extraConfig.config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = extraConfig.config.yAxis).call(_context2, item => ({ ...yAxis,
-      ...item
-    })) : {
-      type: 'value',
-      ...yAxis,
-      ...(extraConfig.config.yAxis || {})
-    },
-    grid: {
-      top: 28,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      containLabel: true,
-      ...(extraConfig.config.grid || {})
-    }
-  };
-
-  const handledSeries = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_0___default()(data).call(data, item => {
-    const itemConfig = typeof extraConfig.seriesItemConfig === 'function' ? extraConfig.seriesItemConfig(item) : extraConfig.seriesItemConfig;
-    return {
-      name: item.name,
-      type: item.type || type,
-      label: {
-        show: false
-      },
-      hoverAnimation: false,
-      data: item.data,
-      ...itemConfig
-    };
-  });
-
-  return { ...config,
-    color: colors.length ? colors : defaultConfig.config.color,
-    series: handledSeries
-  };
-};
-/**
- * 创建具有多个series的折线图的options
- * @param multiLineOption 多条折线的配置
- */
-
-const createMultiLineOption = multiLineOption => {
-  const {
-    title = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = multiLineOption;
-  return createMultiOption({
-    type: 'line',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config: extraConfig.config,
-      seriesItemConfig: {
-        symbol: 'none',
-        ...extraConfig.seriesItemConfig
-      }
-    }
-  });
-};
-/**
- * 创建具有多个series的柱状图的options
- * @param multiBarOptions 多个柱状图的配置
- */
-
-const createMultiBarOption = multiBarOptions => {
-  const {
-    title = '',
-    data = [],
-    colors = [],
-    extraConfig = {
-      config: {},
-      seriesItemConfig: {}
-    }
-  } = multiBarOptions;
-  return createMultiOption({
-    type: 'bar',
-    title: title,
-    data: data,
-    colors: colors,
-    extraConfig: {
-      config: extraConfig.config,
-      seriesItemConfig: {
-        symbol: 'none',
-        ...extraConfig.seriesItemConfig
-      }
-    }
-  });
-};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parent = __webpack_require__(24);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = __webpack_require__(25);
-
-var ArrayPrototype = Array.prototype;
-
-module.exports = function (it) {
-  var own = it.map;
-  return it === ArrayPrototype || (it instanceof Array && own === ArrayPrototype.map) ? map : own;
-};
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(26);
-var entryVirtual = __webpack_require__(49);
-
-module.exports = entryVirtual('Array').map;
-
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-var $ = __webpack_require__(8);
-var $map = __webpack_require__(36).map;
-var arrayMethodHasSpeciesSupport = __webpack_require__(48);
-
-var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
-
-// `Array.prototype.map` method
-// https://tc39.es/ecma262/#sec-array.prototype.map
-// with adding support of @@species
-$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-  map: function map(callbackfn /* , thisArg */) {
-    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-  }
-});
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__(3);
-var propertyIsEnumerableModule = __webpack_require__(29);
-var createPropertyDescriptor = __webpack_require__(9);
-var toIndexedObject = __webpack_require__(30);
-var toPrimitive = __webpack_require__(13);
-var has = __webpack_require__(6);
-var IE8_DOM_DEFINE = __webpack_require__(15);
-
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// `Object.getOwnPropertyDescriptor` method
-// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
-  O = toIndexedObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return $getOwnPropertyDescriptor(O, P);
-  } catch (error) { /* empty */ }
-  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
-};
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $propertyIsEnumerable = {}.propertyIsEnumerable;
-// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// Nashorn ~ JDK8 bug
-var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
-
-// `Object.prototype.propertyIsEnumerable` method implementation
-// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
-exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-  var descriptor = getOwnPropertyDescriptor(this, V);
-  return !!descriptor && descriptor.enumerable;
-} : $propertyIsEnumerable;
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// toObject with fallback for non-array-like ES3 strings
-var IndexedObject = __webpack_require__(10);
-var requireObjectCoercible = __webpack_require__(12);
-
-module.exports = function (it) {
-  return IndexedObject(requireObjectCoercible(it));
-};
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(0);
-var isObject = __webpack_require__(4);
-
-var document = global.document;
-// typeof document.createElement is 'object' in old IE
-var EXISTS = isObject(document) && isObject(document.createElement);
-
-module.exports = function (it) {
-  return EXISTS ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__(1);
-
-var replacement = /#|\.prototype\./;
-
-var isForced = function (feature, detection) {
-  var value = data[normalize(feature)];
-  return value == POLYFILL ? true
-    : value == NATIVE ? false
-    : typeof detection == 'function' ? fails(detection)
-    : !!detection;
-};
-
-var normalize = isForced.normalize = function (string) {
-  return String(string).replace(replacement, '.').toLowerCase();
-};
-
-var data = isForced.data = {};
-var NATIVE = isForced.NATIVE = 'N';
-var POLYFILL = isForced.POLYFILL = 'P';
-
-module.exports = isForced;
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') {
-    throw TypeError(String(it) + ' is not a function');
-  } return it;
-};
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__(3);
-var IE8_DOM_DEFINE = __webpack_require__(15);
-var anObject = __webpack_require__(35);
-var toPrimitive = __webpack_require__(13);
-
-// eslint-disable-next-line es/no-object-defineproperty -- safe
-var $defineProperty = Object.defineProperty;
-
-// `Object.defineProperty` method
-// https://tc39.es/ecma262/#sec-object.defineproperty
-exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return $defineProperty(O, P, Attributes);
-  } catch (error) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(4);
-
-module.exports = function (it) {
-  if (!isObject(it)) {
-    throw TypeError(String(it) + ' is not an object');
-  } return it;
-};
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var bind = __webpack_require__(16);
-var IndexedObject = __webpack_require__(10);
-var toObject = __webpack_require__(14);
-var toLength = __webpack_require__(37);
-var arraySpeciesCreate = __webpack_require__(39);
+var bind = __webpack_require__(20);
+var IndexedObject = __webpack_require__(16);
+var toObject = __webpack_require__(18);
+var toLength = __webpack_require__(22);
+var arraySpeciesCreate = __webpack_require__(63);
 
 var push = [].push;
 
@@ -1339,31 +651,733 @@ module.exports = {
 
 
 /***/ }),
-/* 37 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(38);
+var classof = __webpack_require__(10);
 
-var min = Math.min;
-
-// `ToLength` abstract operation
-// https://tc39.es/ecma262/#sec-tolength
-module.exports = function (argument) {
-  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+// `IsArray` abstract operation
+// https://tc39.es/ecma262/#sec-isarray
+// eslint-disable-next-line es/no-array-isarray -- safe
+module.exports = Array.isArray || function isArray(arg) {
+  return classof(arg) == 'Array';
 };
 
 
 /***/ }),
-/* 38 */
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__(2);
+var wellKnownSymbol = __webpack_require__(9);
+var V8_VERSION = __webpack_require__(25);
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (METHOD_NAME) {
+  // We can't use this feature detection in V8 since it causes
+  // deoptimization and serious performance degradation
+  // https://github.com/zloirock/core-js/issues/677
+  return V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    var constructor = array.constructor = {};
+    constructor[SPECIES] = function () {
+      return { foo: 1 };
+    };
+    return array[METHOD_NAME](Boolean).foo !== 1;
+  });
+};
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(64);
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOption", function() { return createOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPieOption", function() { return createPieOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLineOption", function() { return createLineOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBarOption", function() { return createBarOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRadarOption", function() { return createRadarOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiOption", function() { return createMultiOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiLineOption", function() { return createMultiLineOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiBarOption", function() { return createMultiBarOption; });
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+const formatTitle = title => typeof title === 'string' ? {
+  text: title
+} : title;
+
+const axisLine = {
+  lineStyle: {
+    color: '#CCCCCC'
+  }
+};
+const splitLine = {
+  lineStyle: {
+    type: 'dashed',
+    color: '#CCCCCC'
+  }
+}; // 默认配置
+
+const defaultConfig = {
+  config: {
+    color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+    title: {
+      top: 0,
+      left: 0,
+      textStyle: {
+        fontFamily: 'Microsoft YaHei',
+        fontSize: 14,
+        fontWeight: 400
+      }
+    },
+    textStyle: {
+      color: '#333333'
+    },
+    legend: {
+      orient: 'vertical',
+      icon: 'react',
+      itemWidth: 8,
+      itemHeight: 8,
+      top: 0,
+      right: 0,
+      textStyle: {
+        color: '#666666'
+      }
+    }
+  },
+  seriesItemConfig: {
+    label: {
+      show: false
+    },
+    hoverAnimation: false
+  }
+};
+/**
+ * 创建Echarts的options
+ * @param {SingleSeries} singleSeriesOption 单个series的配置
+ */
+
+const createOption = singleSeriesOptions => {
+  var _context, _context2, _context3, _context4;
+
+  const {
+    title = '',
+    type = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = singleSeriesOptions;
+  const formattedTitle = formatTitle(title);
+  const option = { ...config,
+    color: colors.length ? colors : defaultConfig.config.color,
+    legend: {
+      show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context = ['line', 'bar']).call(_context, type),
+      ...defaultConfig.config.legend,
+      ...config.legend
+    },
+    tooltip: {
+      trigger: 'item',
+      show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = ['line', 'bar']).call(_context2, type)
+    },
+    xAxis: {
+      type: 'category',
+      show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context3 = ['line', 'bar']).call(_context3, type),
+      axisLine: axisLine,
+      ...config.xAxis
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: splitLine,
+      ...config.yAxis,
+      axisLine: {
+        show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context4 = ['line', 'bar']).call(_context4, type),
+        ...axisLine,
+        ...(config.yAxis && config.yAxis.axisLine)
+      }
+    },
+    title: { ...defaultConfig.config.title,
+      ...formattedTitle
+    },
+    textStyle: { ...defaultConfig.config.textStyle,
+      ...(config.textStyle || {})
+    },
+    series: [{
+      type: type,
+      data: data,
+      ...defaultConfig.seriesItemConfig,
+      ...seriesItemConfig
+    }]
+  };
+  return option;
+};
+/**
+ * 创建Echarts饼状图options，默认为环状饼图
+ * @param {SingleSeriesPieType} pieOptions 饼图的配置
+ */
+
+const createPieOption = pieOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    radius = ['0', '75%'],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = pieOptions;
+  const seriesItemOption = {
+    radius,
+    ...seriesItemConfig
+  }; // 图例
+
+  const legend = {
+    icon: 'react',
+    itemWidth: 8,
+    itemHeight: 8,
+    top: 0,
+    right: 0,
+    textStyle: {
+      color: '#666666'
+    },
+    ...(config.legend || {})
+  };
+  return createOption({
+    type: 'pie',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: { ...config,
+        legend
+      },
+      seriesItemConfig: seriesItemOption
+    }
+  });
+};
+/**
+ * 创建Echarts折线图options，默认为不带阴影面积的折线图
+ * @param {SingleSeriesLineType} lineOptions 折线图的配置
+ */
+
+const createLineOption = lineOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = lineOptions;
+  const option = { ...config,
+    tooltip: {
+      show: true,
+      trigger: 'axis',
+      formatter: function (params) {
+        const timeStr = params[0].value[0];
+
+        const valueStr = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(params).call(params, param => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>');
+
+        return `${timeStr}<br/>${valueStr}`;
+      },
+      ...config.tooltip
+    },
+    grid: {
+      top: 50,
+      left: 0,
+      right: 25,
+      bottom: 0,
+      containLabel: true,
+      ...(config.grid || {})
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      axisLine,
+      splitLine: {
+        show: false,
+        ...splitLine
+      },
+      ...(config.xAxis || {})
+    },
+    yAxis: {
+      type: 'value',
+      splitLine,
+      ...(config.yAxis || {}),
+      axisLine: {
+        show: true,
+        ...axisLine,
+        ...(config.yAxis && config.yAxis.axisLine ? config.yAxis.axisLine : {})
+      }
+    }
+  };
+  return createOption({
+    type: 'line',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: option,
+      seriesItemConfig: {
+        symbol: 'none',
+        ...seriesItemConfig
+      }
+    }
+  });
+};
+/**
+ * 创建Echarts柱状图options
+ * @param {SingleSeriesBarType} barOptions 柱状图的配置
+ */
+
+const createBarOption = barOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = barOptions;
+  const option = { ...config,
+    grid: {
+      top: 28,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      containLabel: true,
+      ...(config.grid || {})
+    },
+    xAxis: {
+      type: 'category',
+      axisLine,
+      splitLine: {
+        show: false,
+        ...splitLine
+      },
+      ...(config.xAxis || {})
+    },
+    yAxis: {
+      type: 'value',
+      boundaryGap: false,
+      splitLine,
+      ...(config.yAxis || {}),
+      axisLine: {
+        show: true,
+        ...axisLine,
+        ...(config.yAxis && config.yAxis.axisLine ? config.yAxis.axisLine : {})
+      }
+    }
+  };
+  return createOption({
+    type: 'bar',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: option,
+      seriesItemConfig
+    }
+  });
+};
+/**
+ * 创建Echarts雷达图options
+ * @param radarOptions 雷达图的配置
+ */
+
+const createRadarOption = radarOptions => {
+  const {
+    title = '',
+    legend = [],
+    indicator = [],
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = radarOptions;
+  const option = { ...config,
+    legend: {
+      data: legend,
+      ...(config.legend || {})
+    },
+    radar: {
+      splitLine: { ...splitLine,
+        ...(config.radar && config.radar.splitLine)
+      },
+      axisLine: { ...(config.radar && config.radar.axisLine),
+        lineStyle: {
+          type: 'dashed',
+          ...axisLine.lineStyle,
+          ...(config.radar && config.radar.axisLine && config.radar.axisLine.lineStyle)
+        }
+      },
+      indicator
+    }
+  };
+  return createOption({
+    type: 'radar',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: option,
+      seriesItemConfig
+    }
+  });
+};
+/**
+ * 创建Echarts图中具有多个series的options
+ * @param multiSeriesOption 多个series的配置
+ */
+
+const createMultiOption = multiSeriesOption => {
+  var _context7, _context8;
+
+  const {
+    title = '',
+    type = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = multiSeriesOption;
+  const formattedTitle = formatTitle(title);
+
+  const getAxis = axisType => {
+    const axisConfig = {
+      axisLine: {
+        show: true,
+        ...axisLine
+      },
+      splitLine: {
+        show: axisType === 'value',
+        ...splitLine
+      }
+    };
+
+    if (axisType === 'category') {
+      var _context5;
+
+      // 类型为bar时刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间。
+      axisConfig.boundaryGap = _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context5 = ['bar']).call(_context5, type);
+    }
+
+    return axisConfig;
+  };
+
+  const option = { ...config,
+    title: { ...defaultConfig.config.title,
+      ...formattedTitle
+    },
+    textStyle: { ...defaultConfig.config.textStyle,
+      ...(config.textStyle || {})
+    },
+    tooltip: {
+      show: true,
+      trigger: 'axis',
+      formatter: function (params) {
+        var _context6;
+
+        const dimensionNames = _babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2___default()(_context6 = params[0].dimensionNames).call(_context6, dn => !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(dn).call(dn, '__'));
+
+        if (dimensionNames.toString() === 'x,y') {
+          const categoryStr = params[0].axisDim === 'x' ? params[0].value[0] : params[0].value[1];
+
+          const valueStr = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(params).call(params, param => param.marker + param.seriesName + '：' + (param.axisDim === 'x' ? param.value[1] : param.value[0])).join('<br/>');
+
+          return `${categoryStr}<br/>${valueStr}`;
+        }
+
+        return params;
+      },
+      ...(config.tooltip || {})
+    },
+    legend: {
+      show: data.length > 1,
+      // 多于1个系列展示图例
+      ...defaultConfig.config.legend,
+      orient: 'horizontal',
+      ...(config.legend || {})
+    },
+    grid: {
+      top: title || data.length > 1 ? 40 : 16,
+      // 有标题或多于1个系列时top为40
+      left: 0,
+      right: 10,
+      bottom: 0,
+      containLabel: true,
+      ...(config.grid || {})
+    },
+    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context7 = config.xAxis).call(_context7, item => ({ ...getAxis(item.type || 'category'),
+      ...item
+    })) : {
+      type: 'category',
+      ...getAxis((config.xAxis || {}).type || 'category'),
+      ...(config.xAxis || {})
+    },
+    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context8 = config.yAxis).call(_context8, item => ({ ...getAxis(item.type || 'value'),
+      ...item
+    })) : {
+      type: 'value',
+      ...getAxis((config.yAxis || {}).type || 'value'),
+      ...(config.yAxis || {})
+    }
+  };
+
+  const handledSeries = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(data).call(data, item => {
+    const itemConfig = typeof seriesItemConfig === 'function' ? seriesItemConfig(item) : seriesItemConfig;
+    return {
+      name: item.name,
+      type: item.type || type,
+      label: {
+        show: false
+      },
+      hoverAnimation: false,
+      ...itemConfig,
+      data: item.data
+    };
+  });
+
+  return { ...option,
+    color: colors.length ? colors : defaultConfig.config.color,
+    series: handledSeries
+  };
+};
+/**
+ * 创建具有多个series的折线图的options
+ * @param multiLineOption 多条折线的配置
+ */
+
+const createMultiLineOption = multiLineOption => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = multiLineOption;
+  return createMultiOption({
+    type: 'line',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: config,
+      seriesItemConfig: {
+        symbol: 'none',
+        ...seriesItemConfig
+      }
+    }
+  });
+};
+/**
+ * 创建具有多个series的柱状图的options
+ * @param multiBarOptions 多个柱状图的配置
+ */
+
+const createMultiBarOption = multiBarOptions => {
+  const {
+    title = '',
+    data = [],
+    colors = [],
+    extraConfig: {
+      config = {},
+      seriesItemConfig = {}
+    } = {}
+  } = multiBarOptions;
+  return createMultiOption({
+    type: 'bar',
+    title: title,
+    data: data,
+    colors: colors,
+    extraConfig: {
+      config: config,
+      seriesItemConfig: {
+        symbol: 'none',
+        ...seriesItemConfig
+      }
+    }
+  });
+};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(32);
+
+module.exports = parent;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayIncludes = __webpack_require__(33);
+var stringIncludes = __webpack_require__(46);
+
+var ArrayPrototype = Array.prototype;
+var StringPrototype = String.prototype;
+
+module.exports = function (it) {
+  var own = it.includes;
+  if (it === ArrayPrototype || (it instanceof Array && own === ArrayPrototype.includes)) return arrayIncludes;
+  if (typeof it === 'string' || it === StringPrototype || (it instanceof String && own === StringPrototype.includes)) {
+    return stringIncludes;
+  } return own;
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(34);
+var entryVirtual = __webpack_require__(8);
+
+module.exports = entryVirtual('Array').includes;
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(4);
+var $includes = __webpack_require__(43).includes;
+var addToUnscopables = __webpack_require__(45);
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$({ target: 'Array', proto: true }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports) {
 
-var ceil = Math.ceil;
-var floor = Math.floor;
+var g;
 
-// `ToInteger` abstract operation
-// https://tc39.es/ecma262/#sec-tointeger
-module.exports = function (argument) {
-  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(6);
+var propertyIsEnumerableModule = __webpack_require__(37);
+var createPropertyDescriptor = __webpack_require__(14);
+var toIndexedObject = __webpack_require__(15);
+var toPrimitive = __webpack_require__(17);
+var has = __webpack_require__(12);
+var IE8_DOM_DEFINE = __webpack_require__(19);
+
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+  O = toIndexedObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return $getOwnPropertyDescriptor(O, P);
+  } catch (error) { /* empty */ }
+  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
+};
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $propertyIsEnumerable = {}.propertyIsEnumerable;
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// Nashorn ~ JDK8 bug
+var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+
+// `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+  var descriptor = getOwnPropertyDescriptor(this, V);
+  return !!descriptor && descriptor.enumerable;
+} : $propertyIsEnumerable;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var isObject = __webpack_require__(5);
+
+var document = global.document;
+// typeof document.createElement is 'object' in old IE
+var EXISTS = isObject(document) && isObject(document.createElement);
+
+module.exports = function (it) {
+  return EXISTS ? document.createElement(it) : {};
 };
 
 
@@ -1371,9 +1385,390 @@ module.exports = function (argument) {
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(4);
-var isArray = __webpack_require__(18);
-var wellKnownSymbol = __webpack_require__(19);
+var fails = __webpack_require__(2);
+
+var replacement = /#|\.prototype\./;
+
+var isForced = function (feature, detection) {
+  var value = data[normalize(feature)];
+  return value == POLYFILL ? true
+    : value == NATIVE ? false
+    : typeof detection == 'function' ? fails(detection)
+    : !!detection;
+};
+
+var normalize = isForced.normalize = function (string) {
+  return String(string).replace(replacement, '.').toLowerCase();
+};
+
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+
+module.exports = isForced;
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  if (typeof it != 'function') {
+    throw TypeError(String(it) + ' is not a function');
+  } return it;
+};
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(6);
+var IE8_DOM_DEFINE = __webpack_require__(19);
+var anObject = __webpack_require__(42);
+var toPrimitive = __webpack_require__(17);
+
+// eslint-disable-next-line es/no-object-defineproperty -- safe
+var $defineProperty = Object.defineProperty;
+
+// `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return $defineProperty(O, P, Attributes);
+  } catch (error) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(5);
+
+module.exports = function (it) {
+  if (!isObject(it)) {
+    throw TypeError(String(it) + ' is not an object');
+  } return it;
+};
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toIndexedObject = __webpack_require__(15);
+var toLength = __webpack_require__(22);
+var toAbsoluteIndex = __webpack_require__(44);
+
+// `Array.prototype.{ indexOf, includes }` methods implementation
+var createMethod = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIndexedObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare -- NaN check
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare -- NaN check
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) {
+      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
+  includes: createMethod(true),
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  indexOf: createMethod(false)
+};
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(23);
+
+var max = Math.max;
+var min = Math.min;
+
+// Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+module.exports = function (index, length) {
+  var integer = toInteger(index);
+  return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports) {
+
+module.exports = function () { /* empty */ };
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(47);
+var entryVirtual = __webpack_require__(8);
+
+module.exports = entryVirtual('String').includes;
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(4);
+var notARegExp = __webpack_require__(48);
+var requireObjectCoercible = __webpack_require__(11);
+var correctIsRegExpLogic = __webpack_require__(58);
+
+// `String.prototype.includes` method
+// https://tc39.es/ecma262/#sec-string.prototype.includes
+$({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+  includes: function includes(searchString /* , position = 0 */) {
+    return !!~String(requireObjectCoercible(this))
+      .indexOf(notARegExp(searchString), arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isRegExp = __webpack_require__(49);
+
+module.exports = function (it) {
+  if (isRegExp(it)) {
+    throw TypeError("The method doesn't accept regular expressions");
+  } return it;
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(5);
+var classof = __webpack_require__(10);
+var wellKnownSymbol = __webpack_require__(9);
+
+var MATCH = wellKnownSymbol('match');
+
+// `IsRegExp` abstract operation
+// https://tc39.es/ecma262/#sec-isregexp
+module.exports = function (it) {
+  var isRegExp;
+  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
+};
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var IS_PURE = __webpack_require__(51);
+var store = __webpack_require__(52);
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: '3.12.1',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
+});
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+module.exports = true;
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var setGlobal = __webpack_require__(53);
+
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || setGlobal(SHARED, {});
+
+module.exports = store;
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var createNonEnumerableProperty = __webpack_require__(21);
+
+module.exports = function (key, value) {
+  try {
+    createNonEnumerableProperty(global, key, value);
+  } catch (error) {
+    global[key] = value;
+  } return value;
+};
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+var id = 0;
+var postfix = Math.random();
+
+module.exports = function (key) {
+  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
+};
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getBuiltIn = __webpack_require__(56);
+
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var path = __webpack_require__(7);
+var global = __webpack_require__(0);
+
+var aFunction = function (variable) {
+  return typeof variable == 'function' ? variable : undefined;
+};
+
+module.exports = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace])
+    : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
+};
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable es/no-symbol -- required for testing */
+var NATIVE_SYMBOL = __webpack_require__(24);
+
+module.exports = NATIVE_SYMBOL
+  && !Symbol.sham
+  && typeof Symbol.iterator == 'symbol';
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__(9);
+
+var MATCH = wellKnownSymbol('match');
+
+module.exports = function (METHOD_NAME) {
+  var regexp = /./;
+  try {
+    '/./'[METHOD_NAME](regexp);
+  } catch (error1) {
+    try {
+      regexp[MATCH] = false;
+      return '/./'[METHOD_NAME](regexp);
+    } catch (error2) { /* empty */ }
+  } return false;
+};
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(60);
+
+module.exports = parent;
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = __webpack_require__(61);
+
+var ArrayPrototype = Array.prototype;
+
+module.exports = function (it) {
+  var own = it.map;
+  return it === ArrayPrototype || (it instanceof Array && own === ArrayPrototype.map) ? map : own;
+};
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(62);
+var entryVirtual = __webpack_require__(8);
+
+module.exports = entryVirtual('Array').map;
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(4);
+var $map = __webpack_require__(26).map;
+var arrayMethodHasSpeciesSupport = __webpack_require__(28);
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
+
+// `Array.prototype.map` method
+// https://tc39.es/ecma262/#sec-array.prototype.map
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  map: function map(callbackfn /* , thisArg */) {
+    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(5);
+var isArray = __webpack_require__(27);
+var wellKnownSymbol = __webpack_require__(9);
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -1394,168 +1789,85 @@ module.exports = function (originalArray, length) {
 
 
 /***/ }),
-/* 40 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var IS_PURE = __webpack_require__(41);
-var store = __webpack_require__(42);
-
-(module.exports = function (key, value) {
-  return store[key] || (store[key] = value !== undefined ? value : {});
-})('versions', []).push({
-  version: '3.12.1',
-  mode: IS_PURE ? 'pure' : 'global',
-  copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
-});
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(0);
-var setGlobal = __webpack_require__(43);
-
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || setGlobal(SHARED, {});
-
-module.exports = store;
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(0);
-var createNonEnumerableProperty = __webpack_require__(17);
-
-module.exports = function (key, value) {
-  try {
-    createNonEnumerableProperty(global, key, value);
-  } catch (error) {
-    global[key] = value;
-  } return value;
-};
-
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var postfix = Math.random();
-
-module.exports = function (key) {
-  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
-};
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getBuiltIn = __webpack_require__(46);
-
-module.exports = getBuiltIn('navigator', 'userAgent') || '';
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var path = __webpack_require__(5);
-var global = __webpack_require__(0);
-
-var aFunction = function (variable) {
-  return typeof variable == 'function' ? variable : undefined;
-};
-
-module.exports = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace])
-    : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
-};
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* eslint-disable es/no-symbol -- required for testing */
-var NATIVE_SYMBOL = __webpack_require__(20);
-
-module.exports = NATIVE_SYMBOL
-  && !Symbol.sham
-  && typeof Symbol.iterator == 'symbol';
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__(1);
-var wellKnownSymbol = __webpack_require__(19);
-var V8_VERSION = __webpack_require__(21);
-
-var SPECIES = wellKnownSymbol('species');
-
-module.exports = function (METHOD_NAME) {
-  // We can't use this feature detection in V8 since it causes
-  // deoptimization and serious performance degradation
-  // https://github.com/zloirock/core-js/issues/677
-  return V8_VERSION >= 51 || !fails(function () {
-    var array = [];
-    var constructor = array.constructor = {};
-    constructor[SPECIES] = function () {
-      return { foo: 1 };
-    };
-    return array[METHOD_NAME](Boolean).foo !== 1;
-  });
-};
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var path = __webpack_require__(5);
-
-module.exports = function (CONSTRUCTOR) {
-  return path[CONSTRUCTOR + 'Prototype'];
-};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parent = __webpack_require__(51);
+var parent = __webpack_require__(65);
 
 module.exports = parent;
 
 
 /***/ }),
-/* 51 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(52);
-var path = __webpack_require__(5);
+var filter = __webpack_require__(66);
+
+var ArrayPrototype = Array.prototype;
+
+module.exports = function (it) {
+  var own = it.filter;
+  return it === ArrayPrototype || (it instanceof Array && own === ArrayPrototype.filter) ? filter : own;
+};
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(67);
+var entryVirtual = __webpack_require__(8);
+
+module.exports = entryVirtual('Array').filter;
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(4);
+var $filter = __webpack_require__(26).filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__(28);
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(69);
+
+module.exports = parent;
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(70);
+var path = __webpack_require__(7);
 
 module.exports = path.Array.isArray;
 
 
 /***/ }),
-/* 52 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(8);
-var isArray = __webpack_require__(18);
+var $ = __webpack_require__(4);
+var isArray = __webpack_require__(27);
 
 // `Array.isArray` method
 // https://tc39.es/ecma262/#sec-array.isarray

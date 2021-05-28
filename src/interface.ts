@@ -104,10 +104,12 @@ export interface SingleSeriesRadarType extends SingleSeriesType {
 
 /**
  * 多个series的项
+ * @param {string} type 系列类型
  * @param {string} name 系列名称，用于tooltip的显示，legend 的图例筛选
  * @param {Array} data series项，值格式：[「x」, 「y」, 「其他维度的值」, ...]
  */
 interface MultiSeriesItem {
+   type?: string;
    name: string;
    data: number[];
 }
@@ -133,10 +135,11 @@ interface MultiSeriesType {
 /**
  * 多个series的配置
  * @param {string|any} title 标题组件，包含主标题和副标题。
- * @param {string} type series类型
+ * @param {string} type series类型，不在data中指定type时起作用，若data中指定了type，则会被替代
  * @param {Array} data series项，值格式：[
  *    {
  *       name: '',
+ *       type: '', // 可配置或不配置
  *       data: [[「x」,「y」,「其他维度的值」,...], ...]
  *    }
  * ]
