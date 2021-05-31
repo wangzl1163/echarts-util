@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.0.0 - 28/05/2021
+ * @license :echarts-util - V1.0.0 - 31/05/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -1124,6 +1124,9 @@ const createMultiOption = multiSeriesOption => {
     legend: {
       show: data.length > 1,
       // 多于1个系列展示图例
+      type: data.length > 5 ? 'scroll' : 'plain',
+      // 图例数量多余5个时使用滚动图例
+      width: data.length > 5 ? '60%' : 'auto',
       ...defaultConfig.config.legend,
       orient: 'horizontal',
       ...(config.legend || {})
@@ -1194,7 +1197,7 @@ const createMultiLineOption = multiLineOption => {
     colors: colors,
     extraConfig: {
       config: config,
-      seriesItemConfig: {
+      seriesItemConfig: typeof seriesItemConfig === 'function' ? seriesItemConfig : {
         symbol: 'none',
         ...seriesItemConfig
       }
@@ -1223,10 +1226,7 @@ const createMultiBarOption = multiBarOptions => {
     colors: colors,
     extraConfig: {
       config: config,
-      seriesItemConfig: {
-        symbol: 'none',
-        ...seriesItemConfig
-      }
+      seriesItemConfig: seriesItemConfig
     }
   });
 };
