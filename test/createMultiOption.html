@@ -20,6 +20,7 @@
 	<div id="bar" style="width: 600px;height:400px;"></div>
 	<div id="horizontal-bar" style="width: 600px;height:400px;"></div>
 	<div id="stack-horizontal-bar" style="width: 600px;height:400px;"></div>
+	<div id="mixed-line-bar" style="width: 600px;height:400px;"></div>
 
 	<script>
 		var util = window['echarts-util'];
@@ -127,23 +128,23 @@
 			data: [
 				{
 					name: 'Direct',
-					data: [[320,'Mon'],[302,'Tue'],[301,'Wed'],[334,'Thu'],[390,'Fri'],[330,'Sat'],[320,'Sun']]
+					data: [[320, 'Mon'], [302, 'Tue'], [301, 'Wed'], [334, 'Thu'], [390, 'Fri'], [330, 'Sat'], [320, 'Sun']]
 				},
 				{
 					name: 'Mail Ad',
-					data: [[120,'Mon'], [132,'Tue'], [101, 'Wed'], [134, 'Thu'], [90, 'Fri'], [230, 'Sat'], [210, 'Sun']]
+					data: [[120, 'Mon'], [132, 'Tue'], [101, 'Wed'], [134, 'Thu'], [90, 'Fri'], [230, 'Sat'], [210, 'Sun']]
 				},
 				{
 					name: 'Affiliate Ad',
-					data: [[220,'Mon'], [182,'Tue'], [191, 'Wed'], [234, 'Thu'], [290, 'Fri'], [330, 'Sat'], [310, 'Sun']]
+					data: [[220, 'Mon'], [182, 'Tue'], [191, 'Wed'], [234, 'Thu'], [290, 'Fri'], [330, 'Sat'], [310, 'Sun']]
 				},
 				{
 					name: 'Video Ad',
-					data: [[150,'Mon'], [212,'Tue'], [201, 'Wed'], [154, 'Thu'], [190, 'Fri'], [330, 'Sat'], [410, 'Sun']]
+					data: [[150, 'Mon'], [212, 'Tue'], [201, 'Wed'], [154, 'Thu'], [190, 'Fri'], [330, 'Sat'], [410, 'Sun']]
 				},
 				{
 					name: 'Search Engine',
-					data: [[820,'Mon'], [832,'Tue'], [901, 'Wed'], [934, 'Thu'], [1290, 'Fri'], [1330, 'Sat'], [1320, 'Sun']]
+					data: [[820, 'Mon'], [832, 'Tue'], [901, 'Wed'], [934, 'Thu'], [1290, 'Fri'], [1330, 'Sat'], [1320, 'Sun']]
 				}
 			],
 			extraConfig: {
@@ -167,6 +168,64 @@
 			}
 		});
 		stackHorizontalBarChart.setOption(stackHorizontalBarOption, true);
+		//#endregion
+
+		//#region mixed line bar chart
+		var mixedLineBarChart = echarts.init(document.getElementById('mixed-line-bar'));
+		var mixedLineBarOption = util.createMultiOption({
+			title: 'ECharts 折线柱状图混合 示例',
+			data: [
+				{
+					name: '平均温度',
+					type: 'line',
+					data: [['1月', 2.0], ['2月', 2.2], ['3月', 3.3], ['4月', 4.5], ['5月', 6.3], ['6月', 10.2], ['7月', 20.3], ['8月', 23.4], ['9月', 23.0], ['10月', 16.5], ['11月', 12.0], ['12月', 6.2]]
+				},
+				{
+					name: '降水量',
+					type: 'bar',
+					data: [['1月', 2.6], ['2月', 5.9], ['3月', 9.0], ['4月', 26.4], ['5月', 28.7], ['6月', 70.7], ['7月', 175.6], ['8月', 182.2], ['9月', 48.7], ['10月', 18.8], ['11月', 6.0], ['12月', 2.3]]
+				},
+				{
+					name: '蒸发量',
+					type: 'bar',
+					data: [['1月', 2.0], ['2月', 4.9], ['3月', 7.0], ['4月', 23.2], ['5月', 25.6], ['6月', 76.7], ['7月', 135.6], ['8月', 162.2], ['9月', 32.6], ['10月', 20.0], ['11月', 6.4], ['12月', 3.3]]
+				}
+			],
+			extraConfig: {
+				config: {
+					grid: {top: 60},
+					xAxis: {
+						boundaryGap: true
+					},
+					yAxis: [
+						{
+							type: 'value',
+							name: '温度',
+							min: 0,
+							max: 25,
+							interval: 5,
+							axisLabel: {
+								formatter: '{value} °C'
+							}
+						},
+						{
+							type: 'value',
+							name: '水量',
+							min: 0,
+							max: 250,
+							interval: 50,
+							axisLabel: {
+								formatter: '{value} ml'
+							}
+						}
+					]
+				},
+				seriesItemConfig: (item) => {
+					return item.type === 'bar' ? { yAxisIndex: 1 } : {}
+				}
+			}
+		});
+		mixedLineBarChart.setOption(mixedLineBarOption);
 		//#endregion
 	</script>
 </body>

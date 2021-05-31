@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createMultiLineOption</title>
+</head>
+
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+
+		//#region temperature line chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('main'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createMultiLineOption({
+			title: 'ECharts 未来一周温度变化 示例',
+			data: [
+				{
+					name: '最高气温',
+					data: [['周一', 10], ['周二', 11], ['周三', 13], ['周四', 11], ['周五', 12], ['周六', 12], ['周日', 9]]
+				},
+				{
+					name: '最低气温',
+					data: [['周一', 1], ['周二', -2], ['周三', 2], ['周四', 5], ['周五', 3], ['周六', 2], ['周日', 0]]
+				}
+			],
+			extraConfig: {
+				config: {
+					legend: {
+						top: 30
+					},
+					grid: {
+						top: 60,
+						right: 36
+					},
+					toolbox: {
+						show: true,
+						feature: {
+							dataZoom: {
+								yAxisIndex: 'none'
+							},
+							dataView: { readOnly: false },
+							magicType: { type: ['line', 'bar'] },
+							restore: {},
+							saveAsImage: {}
+						}
+					},
+					yAxis: {
+						axisLine: {
+							show: false
+						},
+						axisLabel: {
+							formatter: '{value} °C'
+						}
+					}
+				},
+				seriesItemConfig: (item) => {
+					return item.name === '最高气温'
+						? {
+							markPoint: {
+								data: [
+									{ type: 'max', name: '最大值' },
+									{ type: 'min', name: '最小值' }
+								]
+							},
+							markLine: {
+								data: [
+									{ type: 'average', name: '平均值' }
+								]
+							}
+						}
+						: {
+							markPoint: {
+								data: [
+									{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }
+								]
+							},
+							markLine: {
+								data: [
+									{ type: 'average', name: '平均值' },
+									[{
+										symbol: 'none',
+										x: '90%',
+										yAxis: 'max'
+									}, {
+										symbol: 'circle',
+										label: {
+											position: 'start',
+											formatter: '最大值'
+										},
+										type: 'max',
+										name: '最高点'
+									}]
+								]
+							}
+						}
+				}
+			}
+		});
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+	</script>
+</body>
+
+</html>

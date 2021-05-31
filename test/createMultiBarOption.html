@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="common.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+	<script src="../dist/echarts-util.js"></script>
+
+	<title>测试createMultiBarOption</title>
+</head>
+
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height:400px;"></div>
+
+	<script>
+		var util = window['echarts-util'];
+
+		//#region stacked column bar chart
+		// 基于准备好的dom，初始化echarts实例
+		var mainChart = echarts.init(document.getElementById('main'));
+
+		// 指定图表的配置项和数据
+		var mainOption = util.createMultiBarOption({
+			title: 'ECharts 堆叠柱状图 示例',
+			data: [
+				{
+					name: '直接访问',
+					data: [['周一',320], ['周二',332], ['周三',301], ['周四',334], ['周五',390], ['周六',330], ['周日',320]]
+				},
+				{
+					name: '邮件营销',
+					data: [['周一',120], ['周二',132], ['周三',101], ['周四',134], ['周五',90], ['周六',230], ['周日',210]]
+				},
+				{
+					name: '联盟广告',
+					data: [['周一',220], ['周二',182], ['周三',191], ['周四',234], ['周五',290], ['周六',330], ['周日',310]]
+				},
+				{
+					name: '视频广告',
+					data: [['周一',150], ['周二',232], ['周三',201], ['周四',154], ['周五',190], ['周六',330], ['周日',410]]
+				},
+				{
+					name: '搜索引擎',
+					data: [['周一',862], ['周二',1018], ['周三',964], ['周四',1026], ['周五',1679], ['周六',1600], ['周日',1570]]
+				},
+				{
+					name: '百度',
+					data: [['周一',620], ['周二',732], ['周三',701], ['周四',734], ['周五',1090], ['周六',1130], ['周日',1120]]
+				},
+				{
+					name: '谷歌',
+					data: [['周一',120], ['周二',132], ['周三',101], ['周四',134], ['周五',290], ['周六',230], ['周日',220]]
+				},
+				{
+					name: '必应',
+					data: [['周一',60], ['周二',72], ['周三',71], ['周四',74], ['周五',190], ['周六',130], ['周日',110]]
+				},
+				{
+					name: '其他',
+					data: [['周一',62], ['周二',82], ['周三',91], ['周四',84], ['周五',109], ['周六',110], ['周日',120]]
+				}
+			],
+			extraConfig: {
+				config: {
+				},
+				seriesItemConfig: (item) => {
+					const itemConfig = {
+						'搜索引擎': {
+							markLine: {
+								lineStyle: {
+									type: 'dashed'
+								},
+								data: [
+									[{ type: 'min' }, { type: 'max' }]
+								]
+							}
+						},
+						'百度': {
+							barWidth: 5
+						}
+					}
+
+					let stack = ''
+
+					if (['邮件营销', '联盟广告', '视频广告'].includes(item.name)) {
+						stack = '广告'
+					}
+
+					if (['百度', '谷歌', '必应', '其他'].includes('搜索引擎')) {
+						stack = '搜索引擎'
+					}
+
+					return {
+						emphasis: {
+							focus: 'series'
+						},
+						stack,
+						...itemConfig[item.name]
+					}
+				}
+			}
+		});
+		// 使用刚指定的配置项和数据显示图表。
+		mainChart.setOption(mainOption);
+		//#endregion
+	</script>
+</body>
+
+</html>
