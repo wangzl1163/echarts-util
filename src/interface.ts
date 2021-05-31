@@ -111,7 +111,7 @@ export interface SingleSeriesRadarType extends SingleSeriesType {
 interface MultiSeriesItem {
    type?: string;
    name: string;
-   data: number[];
+   data: any[];
 }
 
 /**

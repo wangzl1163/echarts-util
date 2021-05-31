@@ -412,6 +412,8 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
       },
       legend: {
          show: data.length > 1, // 多于1个系列展示图例
+         type: data.length > 5 ? 'scroll' : 'plain', // 图例数量多余5个时使用滚动图例
+         width: data.length > 5 ? '60%' : 'auto',
          ...defaultConfig.config.legend,
          orient: 'horizontal',
          ...(config.legend || {})
@@ -485,7 +487,7 @@ export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
       colors: colors,
       extraConfig: {
          config: config,
-         seriesItemConfig: {
+         seriesItemConfig: typeof seriesItemConfig === 'function' ? seriesItemConfig : {
             symbol: 'none',
             ...seriesItemConfig
          }
@@ -515,10 +517,7 @@ export const createMultiBarOption = (multiBarOptions: MultiBarSeries) => {
       colors: colors,
       extraConfig: {
          config: config,
-         seriesItemConfig: {
-            symbol: 'none',
-            ...seriesItemConfig
-         }
+         seriesItemConfig: seriesItemConfig
       }
    })
 }
