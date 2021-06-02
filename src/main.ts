@@ -51,6 +51,7 @@ const defaultConfig = {
 
 /**
  * 初始化echarts配置
+ * 不支持xAxis、yAxis为数组
  * @param {object} option echarts配置项
  */
 export const initOption = (option: {
@@ -124,6 +125,7 @@ export const createOption = (singleSeriesOptions: SingleSeries): any => {
    const formattedTitle = formatTitle(title)
 
    const option = {
+      ...defaultConfig.config,
       ...config,
       color: colors.length ? colors : defaultConfig.config.color,
       legend: {
@@ -133,21 +135,31 @@ export const createOption = (singleSeriesOptions: SingleSeries): any => {
       },
       tooltip: {
          trigger: 'item',
-         show: !['line', 'bar'].includes(type)
+         show: !['line', 'bar'].includes(type),
+         ...defaultConfig.config.tooltip
       },
       xAxis: {
          type: 'category',
          show: ['line', 'bar'].includes(type),
-         axisLine: axisLine,
+         ...defaultConfig.config.xAxis,
+         axisLine: {
+            ...axisLine,
+            ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {})
+         },
          ...config.xAxis
       },
       yAxis: {
          type: 'value',
-         splitLine: splitLine,
+         ...defaultConfig.config.yAxis,
+         splitLine: {
+            ...splitLine,
+            ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {})
+         },
          ...config.yAxis,
          axisLine: {
             show: ['line', 'bar'].includes(type),
             ...axisLine,
+            ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
             ...(config.yAxis && config.yAxis.axisLine)
          }
       },
@@ -441,6 +453,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
    }
 
    const option = {
+      ...defaultConfig.config,
       ...config,
       title: {
          ...defaultConfig.config.title,
@@ -464,6 +477,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
             
             return params
          },
+         ...defaultConfig.config.tooltip,
          ...(config.tooltip || {})
       },
       legend: {
@@ -480,27 +494,54 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          right: 10,
          bottom: 0,
          containLabel: true,
+         ...defaultConfig.config.grid,
          ...(config.grid || {})
       },
       xAxis: Array.isArray(config.xAxis)
          ? config.xAxis.map(item => ({ ...(getAxis(item.type || 'category')), ...item }))
          : {
             type: 'category',
-            ...(getAxis((config.xAxis || {}).type || 'category')),
-            ...(config.xAxis || {})
+            ...getAxis((config.xAxis || {}).type || 'category'),
+            ...(config.xAxis || {}),
+            axisLine: {
+               ...getAxis((config.xAxis || {}).type || 'category').axisLine,
+               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+               ...(config.xAxis ? config.xAxis.axisLine : {})
+            },
+            splitLine: {
+               ...getAxis((config.xAxis || {}).type || 'category').splitLine,
+               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
+               ...(config.xAxis ? config.xAxis.splitLine : {})
+            }
          },
       yAxis: Array.isArray(config.yAxis)
          ? config.yAxis.map(item => ({ ...(getAxis(item.type || 'value')), ...item }))
          : {
             type: 'value',
             ...(getAxis((config.yAxis || {}).type || 'value')),
-            ...(config.yAxis || {})
+            ...(config.yAxis || {}),
+            axisLine: {
+               ...getAxis((config.yAxis || {}).type || 'category').axisLine,
+               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
+               ...(config.yAxis ? config.yAxis.axisLine : {})
+            },
+            splitLine: {
+               ...getAxis((config.yAxis || {}).type || 'category').splitLine,
+               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+               ...(config.yAxis ? config.yAxis.splitLine : {})
+            }
          }
    }
    const handledSeries = data.map(item => {
       const itemConfig = typeof seriesItemConfig === 'function'
-         ? seriesItemConfig(item)
-         : seriesItemConfig
+         ? {
+            ...defaultConfig.seriesItemConfig,
+            ...seriesItemConfig(item)
+         }
+         : {
+            ...defaultConfig.seriesItemConfig,
+            ...seriesItemConfig
+         }
   
       return {
          name: item.name,
