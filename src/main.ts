@@ -50,6 +50,62 @@ const defaultConfig = {
 }
 
 /**
+ * 初始化echarts配置
+ * @param {object} option echarts配置项
+ */
+export const initOption = (option: {
+   config?: any,
+   seriesItemConfig?: any
+}): void => {
+   const {
+      config = {},
+      seriesItemConfig = {}
+   } = option
+   
+   defaultConfig.config = {
+      ...defaultConfig.config,
+      ...config,
+      title: {
+         top: 0,
+         left: 0,
+         ...config.title,
+         textStyle: {
+            fontFamily: 'Microsoft YaHei',
+            fontSize: 14,
+            fontWeight: 400,
+            ...(config.title ? config.title.textStyle : {})
+         }
+      },
+      textStyle: {
+         color: '#333333',
+         ...config.textStyle
+      },
+      legend: {
+         orient: 'vertical',
+         icon: 'react',
+         itemWidth: 8,
+         itemHeight: 8,
+         top: 0,
+         right: 0,
+         ...config.legend,
+         textStyle: {
+            color: '#666666',
+            ...(config.legend ? config.legend.textStyle : {})
+         }
+      }
+   }
+
+   defaultConfig.seriesItemConfig = {
+      ...defaultConfig.seriesItemConfig,
+      ...seriesItemConfig,
+      label: {
+         show: false,
+         ...seriesItemConfig.label
+      }
+   }
+}
+
+/**
  * 创建Echarts的options
  * @param {SingleSeries} singleSeriesOption 单个series的配置
  */
