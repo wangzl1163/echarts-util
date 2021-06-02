@@ -1,6 +1,6 @@
 {
   "name": "echarts-util",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "简化echarts配置的工具。",
   "main": "dist/echarts-util.js",
   "scripts": {
