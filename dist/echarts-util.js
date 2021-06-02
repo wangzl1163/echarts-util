@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.0 - 02/06/2021
+ * @license :echarts-util - V1.1.1 - 02/06/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -775,6 +775,7 @@ const defaultConfig = {
 };
 /**
  * 初始化echarts配置
+ * 不支持xAxis、yAxis为数组
  * @param {object} option echarts配置项
  */
 
@@ -841,7 +842,8 @@ const createOption = singleSeriesOptions => {
     } = {}
   } = singleSeriesOptions;
   const formattedTitle = formatTitle(title);
-  const option = { ...config,
+  const option = { ...defaultConfig.config,
+    ...config,
     color: colors.length ? colors : defaultConfig.config.color,
     legend: {
       show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context = ['line', 'bar']).call(_context, type),
@@ -850,21 +852,29 @@ const createOption = singleSeriesOptions => {
     },
     tooltip: {
       trigger: 'item',
-      show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = ['line', 'bar']).call(_context2, type)
+      show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = ['line', 'bar']).call(_context2, type),
+      ...defaultConfig.config.tooltip
     },
     xAxis: {
       type: 'category',
       show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context3 = ['line', 'bar']).call(_context3, type),
-      axisLine: axisLine,
+      ...defaultConfig.config.xAxis,
+      axisLine: { ...axisLine,
+        ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {})
+      },
       ...config.xAxis
     },
     yAxis: {
       type: 'value',
-      splitLine: splitLine,
+      ...defaultConfig.config.yAxis,
+      splitLine: { ...splitLine,
+        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {})
+      },
       ...config.yAxis,
       axisLine: {
         show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context4 = ['line', 'bar']).call(_context4, type),
         ...axisLine,
+        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
         ...(config.yAxis && config.yAxis.axisLine)
       }
     },
@@ -1144,7 +1154,8 @@ const createMultiOption = multiSeriesOption => {
     return axisConfig;
   };
 
-  const option = { ...config,
+  const option = { ...defaultConfig.config,
+    ...config,
     title: { ...defaultConfig.config.title,
       ...formattedTitle
     },
@@ -1169,6 +1180,7 @@ const createMultiOption = multiSeriesOption => {
 
         return params;
       },
+      ...defaultConfig.config.tooltip,
       ...(config.tooltip || {})
     },
     legend: {
@@ -1188,6 +1200,7 @@ const createMultiOption = multiSeriesOption => {
       right: 10,
       bottom: 0,
       containLabel: true,
+      ...defaultConfig.config.grid,
       ...(config.grid || {})
     },
     xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context7 = config.xAxis).call(_context7, item => ({ ...getAxis(item.type || 'category'),
@@ -1195,19 +1208,39 @@ const createMultiOption = multiSeriesOption => {
     })) : {
       type: 'category',
       ...getAxis((config.xAxis || {}).type || 'category'),
-      ...(config.xAxis || {})
+      ...(config.xAxis || {}),
+      axisLine: { ...getAxis((config.xAxis || {}).type || 'category').axisLine,
+        ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+        ...(config.xAxis ? config.xAxis.axisLine : {})
+      },
+      splitLine: { ...getAxis((config.xAxis || {}).type || 'category').splitLine,
+        ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
+        ...(config.xAxis ? config.xAxis.splitLine : {})
+      }
     },
     yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context8 = config.yAxis).call(_context8, item => ({ ...getAxis(item.type || 'value'),
       ...item
     })) : {
       type: 'value',
       ...getAxis((config.yAxis || {}).type || 'value'),
-      ...(config.yAxis || {})
+      ...(config.yAxis || {}),
+      axisLine: { ...getAxis((config.yAxis || {}).type || 'category').axisLine,
+        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
+        ...(config.yAxis ? config.yAxis.axisLine : {})
+      },
+      splitLine: { ...getAxis((config.yAxis || {}).type || 'category').splitLine,
+        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+        ...(config.yAxis ? config.yAxis.splitLine : {})
+      }
     }
   };
 
   const handledSeries = _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(data).call(data, item => {
-    const itemConfig = typeof seriesItemConfig === 'function' ? seriesItemConfig(item) : seriesItemConfig;
+    const itemConfig = typeof seriesItemConfig === 'function' ? { ...defaultConfig.seriesItemConfig,
+      ...seriesItemConfig(item)
+    } : { ...defaultConfig.seriesItemConfig,
+      ...seriesItemConfig
+    };
     return {
       name: item.name,
       type: item.type || type,
