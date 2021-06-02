@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.0.0 - 31/05/2021
+ * @license :echarts-util - V1.1.0 - 02/06/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -701,6 +701,7 @@ module.exports = __webpack_require__(64);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initOption", function() { return initOption; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOption", function() { return createOption; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPieOption", function() { return createPieOption; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLineOption", function() { return createLineOption; });
@@ -771,6 +772,55 @@ const defaultConfig = {
     },
     hoverAnimation: false
   }
+};
+/**
+ * 初始化echarts配置
+ * @param {object} option echarts配置项
+ */
+
+const initOption = option => {
+  const {
+    config = {},
+    seriesItemConfig = {}
+  } = option;
+  defaultConfig.config = { ...defaultConfig.config,
+    ...config,
+    title: {
+      top: 0,
+      left: 0,
+      ...config.title,
+      textStyle: {
+        fontFamily: 'Microsoft YaHei',
+        fontSize: 14,
+        fontWeight: 400,
+        ...(config.title ? config.title.textStyle : {})
+      }
+    },
+    textStyle: {
+      color: '#333333',
+      ...config.textStyle
+    },
+    legend: {
+      orient: 'vertical',
+      icon: 'react',
+      itemWidth: 8,
+      itemHeight: 8,
+      top: 0,
+      right: 0,
+      ...config.legend,
+      textStyle: {
+        color: '#666666',
+        ...(config.legend ? config.legend.textStyle : {})
+      }
+    }
+  };
+  defaultConfig.seriesItemConfig = { ...defaultConfig.seriesItemConfig,
+    ...seriesItemConfig,
+    label: {
+      show: false,
+      ...seriesItemConfig.label
+    }
+  };
 };
 /**
  * 创建Echarts的options
