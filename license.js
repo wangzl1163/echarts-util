@@ -15,5 +15,5 @@ if (mm < 10) {
 const today = dd + '/' + mm + '/' + yyyy
 
 exports.banner = `@license :${package.name} - V${package.version} - ${today}
-https://github.com/wangzl1163/webstorer
+https://github.com/wangzl1163/${package.name}
 Copyright (c) ${yyyy} @wangzl1163; Licensed ${package.license}`
