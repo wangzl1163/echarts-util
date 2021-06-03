@@ -502,6 +502,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          : {
             type: 'category',
             ...getAxis((config.xAxis || {}).type || 'category'),
+            ...defaultConfig.config.xAxis,
             ...(config.xAxis || {}),
             axisLine: {
                ...getAxis((config.xAxis || {}).type || 'category').axisLine,
@@ -519,6 +520,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          : {
             type: 'value',
             ...(getAxis((config.yAxis || {}).type || 'value')),
+            ...defaultConfig.config.yAxis,
             ...(config.yAxis || {}),
             axisLine: {
                ...getAxis((config.yAxis || {}).type || 'category').axisLine,

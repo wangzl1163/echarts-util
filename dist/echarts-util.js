@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.1 - 02/06/2021
+ * @license :echarts-util - V1.1.1 - 03/06/2021
  * https://github.com/wangzl1163/webstorer
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -1208,6 +1208,7 @@ const createMultiOption = multiSeriesOption => {
     })) : {
       type: 'category',
       ...getAxis((config.xAxis || {}).type || 'category'),
+      ...defaultConfig.config.xAxis,
       ...(config.xAxis || {}),
       axisLine: { ...getAxis((config.xAxis || {}).type || 'category').axisLine,
         ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
@@ -1223,6 +1224,7 @@ const createMultiOption = multiSeriesOption => {
     })) : {
       type: 'value',
       ...getAxis((config.yAxis || {}).type || 'value'),
+      ...defaultConfig.config.yAxis,
       ...(config.yAxis || {}),
       axisLine: { ...getAxis((config.yAxis || {}).type || 'category').axisLine,
         ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
