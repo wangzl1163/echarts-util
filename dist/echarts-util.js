@@ -1,6 +1,6 @@
 /*!
- * @license :echarts-util - V1.1.1 - 03/06/2021
- * https://github.com/wangzl1163/webstorer
+ * @license :echarts-util - V1.1.3 - 03/06/2021
+ * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
