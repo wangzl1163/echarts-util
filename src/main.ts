@@ -136,7 +136,8 @@ export const createOption = (singleSeriesOptions: SingleSeries): any => {
       tooltip: {
          trigger: 'item',
          show: !['line', 'bar'].includes(type),
-         ...defaultConfig.config.tooltip
+         ...defaultConfig.config.tooltip,
+         ...config.tooltip
       },
       xAxis: {
          type: 'category',
