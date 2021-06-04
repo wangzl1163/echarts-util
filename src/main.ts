@@ -142,25 +142,27 @@ export const createOption = (singleSeriesOptions: SingleSeries): any => {
          type: 'category',
          show: ['line', 'bar'].includes(type),
          ...defaultConfig.config.xAxis,
+         ...config.xAxis,
          axisLine: {
             ...axisLine,
-            ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {})
-         },
-         ...config.xAxis
+            ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+            ...(config.xAxis ? config.xAxis.axisLine : {})
+         }
       },
       yAxis: {
          type: 'value',
          ...defaultConfig.config.yAxis,
+         ...config.yAxis,
          splitLine: {
             ...splitLine,
-            ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {})
+            ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+            ...(config.yAxis ? config.yAxis.splitLine : {})
          },
-         ...config.yAxis,
          axisLine: {
             show: ['line', 'bar'].includes(type),
             ...axisLine,
             ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
-            ...(config.yAxis && config.yAxis.axisLine)
+            ...(config.yAxis ? config.yAxis.axisLine : {})
          }
       },
       title: {
