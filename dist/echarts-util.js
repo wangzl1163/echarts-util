@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.4 - 04/06/2021
+ * @license :echarts-util - V1.1.5 - 04/06/2021
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -853,7 +853,8 @@ const createOption = singleSeriesOptions => {
     tooltip: {
       trigger: 'item',
       show: !_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context2 = ['line', 'bar']).call(_context2, type),
-      ...defaultConfig.config.tooltip
+      ...defaultConfig.config.tooltip,
+      ...config.tooltip
     },
     xAxis: {
       type: 'category',
