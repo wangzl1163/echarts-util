@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.3 - 03/06/2021
+ * @license :echarts-util - V1.1.4 - 04/06/2021
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -859,23 +859,25 @@ const createOption = singleSeriesOptions => {
       type: 'category',
       show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context3 = ['line', 'bar']).call(_context3, type),
       ...defaultConfig.config.xAxis,
+      ...config.xAxis,
       axisLine: { ...axisLine,
-        ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {})
-      },
-      ...config.xAxis
+        ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+        ...(config.xAxis ? config.xAxis.axisLine : {})
+      }
     },
     yAxis: {
       type: 'value',
       ...defaultConfig.config.yAxis,
-      splitLine: { ...splitLine,
-        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {})
-      },
       ...config.yAxis,
+      splitLine: { ...splitLine,
+        ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+        ...(config.yAxis ? config.yAxis.splitLine : {})
+      },
       axisLine: {
         show: _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default()(_context4 = ['line', 'bar']).call(_context4, type),
         ...axisLine,
         ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
-        ...(config.yAxis && config.yAxis.axisLine)
+        ...(config.yAxis ? config.yAxis.axisLine : {})
       }
     },
     title: { ...defaultConfig.config.title,
