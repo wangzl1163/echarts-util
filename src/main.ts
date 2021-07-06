@@ -271,7 +271,7 @@ export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
          ...(config.grid || {})
       },
       xAxis: {
-         type: 'category',
+         // type: 'category',
          boundaryGap: false,
          axisLine,
          splitLine: {
@@ -281,7 +281,7 @@ export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
          ...(config.xAxis || {})
       },
       yAxis: {
-         type: 'value',
+         // type: 'value',
          splitLine,
          ...(config.yAxis || {}),
          axisLine: {
@@ -333,7 +333,7 @@ export const createBarOption = (barOptions: SingleSeriesBarType): any => {
          ...(config.grid || {})
       },
       xAxis: {
-         type: 'category',
+         // type: 'category',
          axisLine,
          splitLine: {
             show: false,
@@ -342,7 +342,7 @@ export const createBarOption = (barOptions: SingleSeriesBarType): any => {
          ...(config.xAxis || {})
       },
       yAxis: {
-         type: 'value',
+         // type: 'value',
          boundaryGap: false,
          splitLine,
          ...(config.yAxis || {}),
