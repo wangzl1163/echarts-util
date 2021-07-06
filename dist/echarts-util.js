@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.5 - 04/06/2021
+ * @license :echarts-util - V1.1.6 - 06/07/2021
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -978,7 +978,7 @@ const createLineOption = lineOptions => {
       ...(config.grid || {})
     },
     xAxis: {
-      type: 'category',
+      // type: 'category',
       boundaryGap: false,
       axisLine,
       splitLine: {
@@ -988,7 +988,7 @@ const createLineOption = lineOptions => {
       ...(config.xAxis || {})
     },
     yAxis: {
-      type: 'value',
+      // type: 'value',
       splitLine,
       ...(config.yAxis || {}),
       axisLine: {
@@ -1037,7 +1037,7 @@ const createBarOption = barOptions => {
       ...(config.grid || {})
     },
     xAxis: {
-      type: 'category',
+      // type: 'category',
       axisLine,
       splitLine: {
         show: false,
@@ -1046,7 +1046,7 @@ const createBarOption = barOptions => {
       ...(config.xAxis || {})
     },
     yAxis: {
-      type: 'value',
+      // type: 'value',
       boundaryGap: false,
       splitLine,
       ...(config.yAxis || {}),
