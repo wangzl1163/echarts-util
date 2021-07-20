@@ -33,7 +33,7 @@ const defaultConfig = {
       },
       legend: {
          orient: 'vertical',
-         icon: 'react',
+         icon: 'rect',
          itemWidth: 8,
          itemHeight: 8,
          top: 0,
@@ -83,7 +83,7 @@ export const initOption = (option: {
       },
       legend: {
          orient: 'vertical',
-         icon: 'react',
+         icon: 'rect',
          itemWidth: 8,
          itemHeight: 8,
          top: 0,
@@ -210,7 +210,7 @@ export const createPieOption = (pieOptions: SingleSeriesPieType): any => {
 
    // 图例
    const legend = {
-      icon: 'react',
+      icon: 'rect',
       itemWidth: 8,
       itemHeight: 8,
       top: 0,
