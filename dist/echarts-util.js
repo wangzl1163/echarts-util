@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.1.6 - 06/07/2021
+ * @license :echarts-util - V1.1.7 - 20/07/2021
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2021 @wangzl1163; Licensed MIT
  */
@@ -756,7 +756,7 @@ const defaultConfig = {
     },
     legend: {
       orient: 'vertical',
-      icon: 'react',
+      icon: 'rect',
       itemWidth: 8,
       itemHeight: 8,
       top: 0,
@@ -803,7 +803,7 @@ const initOption = option => {
     },
     legend: {
       orient: 'vertical',
-      icon: 'react',
+      icon: 'rect',
       itemWidth: 8,
       itemHeight: 8,
       top: 0,
@@ -918,7 +918,7 @@ const createPieOption = pieOptions => {
   }; // 图例
 
   const legend = {
-    icon: 'react',
+    icon: 'rect',
     itemWidth: 8,
     itemHeight: 8,
     top: 0,
