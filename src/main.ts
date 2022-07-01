@@ -1,6 +1,15 @@
-import { SingleSeries, SingleSeriesPieType, SingleSeriesLineType, SingleSeriesBarType, SingleSeriesRadarType, MultiSeries, MultiLineSeries, MultiBarSeries } from './interface';
+import {
+   SingleSeries,
+   SingleSeriesPieType,
+   SingleSeriesLineType,
+   SingleSeriesBarType,
+   SingleSeriesRadarType,
+   MultiSeries,
+   MultiLineSeries,
+   MultiBarSeries
+} from './interface'
 
-const formatTitle = (title) => typeof title === 'string' ? { text: title } : title
+const formatTitle = (title) => (typeof title === 'string' ? { text: title } : title)
 
 const axisLine = {
    lineStyle: {
@@ -38,7 +47,7 @@ const defaultConfig = {
          itemHeight: 8,
          top: 0,
          right: 0,
-         textStyle: { color: '#666666' },
+         textStyle: { color: '#666666' }
       }
    },
    seriesItemConfig: {
@@ -54,15 +63,9 @@ const defaultConfig = {
  * 不支持xAxis、yAxis为数组
  * @param {object} option echarts配置项
  */
-export const initOption = (option: {
-   config?: any,
-   seriesItemConfig?: any
-}): void => {
-   const {
-      config = {},
-      seriesItemConfig = {}
-   } = option
-   
+export const initOption = (option: { config?: any; seriesItemConfig?: any }): void => {
+   const { config = {}, seriesItemConfig = {} } = option
+
    defaultConfig.config = {
       ...defaultConfig.config,
       ...config,
@@ -116,10 +119,7 @@ export const createOption = (singleSeriesOptions: SingleSeries): any => {
       type = '',
       data = [],
       colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = singleSeriesOptions
 
    const formattedTitle = formatTitle(title)
@@ -197,10 +197,7 @@ export const createPieOption = (pieOptions: SingleSeriesPieType): any => {
       data = [],
       colors = [],
       radius = ['0', '75%'],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = pieOptions
 
    const seriesItemOption = {
@@ -239,25 +236,19 @@ export const createPieOption = (pieOptions: SingleSeriesPieType): any => {
  * @param {SingleSeriesLineType} lineOptions 折线图的配置
  */
 export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
-   const {
-      title = '',
-      data = [],
-      colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
-   } = lineOptions
+   const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = lineOptions
 
    const option = {
       ...config,
       tooltip: {
          show: true,
          trigger: 'axis',
-         formatter: function(params) {
+         formatter: function (params) {
             const timeStr = params[0].value[0]
-            const valueStr = params.map(param => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>')
-  
+            const valueStr = params
+               .map((param) => param.marker + param.seriesName + '：' + param.value[1])
+               .join('<br/>')
+
             return `${timeStr}<br/>${valueStr}`
          },
          ...config.tooltip
@@ -291,7 +282,7 @@ export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
          }
       }
    }
-   
+
    return createOption({
       type: 'line',
       title: title,
@@ -312,15 +303,7 @@ export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
  * @param {SingleSeriesBarType} barOptions 柱状图的配置
  */
 export const createBarOption = (barOptions: SingleSeriesBarType): any => {
-   const {
-      title = '',
-      data = [],
-      colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
-   } = barOptions
+   const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = barOptions
 
    const option = {
       ...config,
@@ -377,10 +360,7 @@ export const createRadarOption = (radarOptions: SingleSeriesRadarType): any => {
       indicator = [],
       data = [],
       colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = radarOptions
 
    const option = {
@@ -428,10 +408,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
       type = '',
       data = [],
       colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = multiSeriesOption
 
    const formattedTitle = formatTitle(title)
@@ -469,15 +446,23 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
       tooltip: {
          show: true,
          trigger: 'axis',
-         formatter: function(params) {
-            const dimensionNames = params[0].dimensionNames.filter(dn => !dn.includes('__'))
+         formatter: function (params) {
+            const dimensionNames = params[0].dimensionNames.filter((dn) => !dn.includes('__'))
             if (dimensionNames.toString() === 'x,y') {
                const categoryStr = params[0].axisDim === 'x' ? params[0].value[0] : params[0].value[1]
-               const valueStr = params.map(param => param.marker + param.seriesName + '：' + (param.axisDim === 'x' ? param.value[1] : param.value[0])).join('<br/>')
-  
+               const valueStr = params
+                  .map(
+                     (param) =>
+                        param.marker +
+                        param.seriesName +
+                        '：' +
+                        (param.axisDim === 'x' ? param.value[1] : param.value[0])
+                  )
+                  .join('<br/>')
+
                return `${categoryStr}<br/>${valueStr}`
             }
-            
+
             return params
          },
          ...defaultConfig.config.tooltip,
@@ -491,63 +476,74 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          orient: 'horizontal',
          ...(config.legend || {})
       },
-      grid: {
-         top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
-         left: 0,
-         right: 10,
-         bottom: 0,
-         containLabel: true,
-         ...defaultConfig.config.grid,
-         ...(config.grid || {})
-      },
+      grid: Array.isArray(config.grid)
+         ? config.grid.map((item) => ({
+              top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+              left: 0,
+              right: 10,
+              bottom: 0,
+              containLabel: true,
+              ...defaultConfig.config.grid,
+              ...item
+           }))
+         : {
+              top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+              left: 0,
+              right: 10,
+              bottom: 0,
+              containLabel: true,
+              ...defaultConfig.config.grid,
+              ...(config.grid || {})
+           },
       xAxis: Array.isArray(config.xAxis)
-         ? config.xAxis.map(item => ({ ...(getAxis(item.type || 'category')), ...item }))
+         ? config.xAxis.map((item) => ({ ...getAxis(item.type || 'category'), ...item }))
          : {
-            type: 'category',
-            ...getAxis((config.xAxis || {}).type || 'category'),
-            ...defaultConfig.config.xAxis,
-            ...(config.xAxis || {}),
-            axisLine: {
-               ...getAxis((config.xAxis || {}).type || 'category').axisLine,
-               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
-               ...(config.xAxis ? config.xAxis.axisLine : {})
-            },
-            splitLine: {
-               ...getAxis((config.xAxis || {}).type || 'category').splitLine,
-               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
-               ...(config.xAxis ? config.xAxis.splitLine : {})
-            }
-         },
+              type: 'category',
+              ...getAxis((config.xAxis || {}).type || 'category'),
+              ...defaultConfig.config.xAxis,
+              ...(config.xAxis || {}),
+              axisLine: {
+                 ...getAxis((config.xAxis || {}).type || 'category').axisLine,
+                 ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+                 ...(config.xAxis ? config.xAxis.axisLine : {})
+              },
+              splitLine: {
+                 ...getAxis((config.xAxis || {}).type || 'category').splitLine,
+                 ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
+                 ...(config.xAxis ? config.xAxis.splitLine : {})
+              }
+           },
       yAxis: Array.isArray(config.yAxis)
-         ? config.yAxis.map(item => ({ ...(getAxis(item.type || 'value')), ...item }))
+         ? config.yAxis.map((item) => ({ ...getAxis(item.type || 'value'), ...item }))
          : {
-            type: 'value',
-            ...(getAxis((config.yAxis || {}).type || 'value')),
-            ...defaultConfig.config.yAxis,
-            ...(config.yAxis || {}),
-            axisLine: {
-               ...getAxis((config.yAxis || {}).type || 'category').axisLine,
-               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
-               ...(config.yAxis ? config.yAxis.axisLine : {})
-            },
-            splitLine: {
-               ...getAxis((config.yAxis || {}).type || 'category').splitLine,
-               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
-               ...(config.yAxis ? config.yAxis.splitLine : {})
-            }
-         }
+              type: 'value',
+              ...getAxis((config.yAxis || {}).type || 'value'),
+              ...defaultConfig.config.yAxis,
+              ...(config.yAxis || {}),
+              axisLine: {
+                 ...getAxis((config.yAxis || {}).type || 'category').axisLine,
+                 ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
+                 ...(config.yAxis ? config.yAxis.axisLine : {})
+              },
+              splitLine: {
+                 ...getAxis((config.yAxis || {}).type || 'category').splitLine,
+                 ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+                 ...(config.yAxis ? config.yAxis.splitLine : {})
+              }
+           }
    }
-   const handledSeries = data.map(item => {
-      const itemConfig = typeof seriesItemConfig === 'function'
-         ? {
-            ...defaultConfig.seriesItemConfig,
-            ...seriesItemConfig(item)
-         }
-         : {
-            ...defaultConfig.seriesItemConfig,
-            ...seriesItemConfig
-         }
-  
+   const handledSeries = data.map((item) => {
+      const itemConfig =
+         typeof seriesItemConfig === 'function'
+            ? {
+                 ...defaultConfig.seriesItemConfig,
+                 ...seriesItemConfig(item)
+              }
+            : {
+                 ...defaultConfig.seriesItemConfig,
+                 ...seriesItemConfig
+              }
+
       return {
          name: item.name,
          type: item.type || type,
@@ -559,7 +555,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          data: item.data
       }
    })
-  
+
    return {
       ...option,
       color: colors.length ? colors : defaultConfig.config.color,
@@ -576,10 +572,7 @@ export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
       title = '',
       data = [],
       colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = multiLineOption
 
    return createMultiOption({
@@ -589,10 +582,13 @@ export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
       colors: colors,
       extraConfig: {
          config: config,
-         seriesItemConfig: typeof seriesItemConfig === 'function' ? seriesItemConfig : {
-            symbol: 'none',
-            ...seriesItemConfig
-         }
+         seriesItemConfig:
+            typeof seriesItemConfig === 'function'
+               ? seriesItemConfig
+               : {
+                    symbol: 'none',
+                    ...seriesItemConfig
+                 }
       }
    })
 }
@@ -606,10 +602,7 @@ export const createMultiBarOption = (multiBarOptions: MultiBarSeries) => {
       title = '',
       data = [],
       colors = [],
-      extraConfig: {
-         config = {},
-         seriesItemConfig = {}
-      } = {}
+      extraConfig: { config = {}, seriesItemConfig = {} } = {}
    } = multiBarOptions
 
    return createMultiOption({
