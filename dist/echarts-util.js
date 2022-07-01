@@ -1,7 +1,7 @@
 /*!
- * @license :echarts-util - V1.1.7 - 20/07/2021
+ * @license :echarts-util - V1.1.10 - 01/07/2022
  * https://github.com/wangzl1163/echarts-util
- * Copyright (c) 2021 @wangzl1163; Licensed MIT
+ * Copyright (c) 2022 @wangzl1163; Licensed MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -128,6 +128,12 @@ module.exports = __webpack_require__(31);
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(59);
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -138,12 +144,6 @@ module.exports = function (exec) {
   }
 };
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(59);
 
 /***/ }),
 /* 4 */
@@ -157,7 +157,7 @@ var isForced = __webpack_require__(39);
 var path = __webpack_require__(7);
 var bind = __webpack_require__(20);
 var createNonEnumerableProperty = __webpack_require__(21);
-var has = __webpack_require__(12);
+var has = __webpack_require__(13);
 
 var wrapConstructor = function (NativeConstructor) {
   var Wrapper = function (a, b, c) {
@@ -263,7 +263,7 @@ module.exports = function (it) {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(3);
 
 // Detect IE8's incomplete defineProperty implementation
 module.exports = !fails(function () {
@@ -296,7 +296,7 @@ module.exports = function (CONSTRUCTOR) {
 
 var global = __webpack_require__(0);
 var shared = __webpack_require__(50);
-var has = __webpack_require__(12);
+var has = __webpack_require__(13);
 var uid = __webpack_require__(54);
 var NATIVE_SYMBOL = __webpack_require__(24);
 var USE_SYMBOL_AS_UID = __webpack_require__(57);
@@ -318,6 +318,12 @@ module.exports = function (name) {
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(68);
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -328,7 +334,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // `RequireObjectCoercible` abstract operation
@@ -340,7 +346,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toObject = __webpack_require__(18);
@@ -351,12 +357,6 @@ module.exports = function hasOwn(it, key) {
   return hasOwnProperty.call(toObject(it), key);
 };
 
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(68);
 
 /***/ }),
 /* 14 */
@@ -378,7 +378,7 @@ module.exports = function (bitmap, value) {
 
 // toObject with fallback for non-array-like ES3 strings
 var IndexedObject = __webpack_require__(16);
-var requireObjectCoercible = __webpack_require__(11);
+var requireObjectCoercible = __webpack_require__(12);
 
 module.exports = function (it) {
   return IndexedObject(requireObjectCoercible(it));
@@ -389,8 +389,8 @@ module.exports = function (it) {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
-var classof = __webpack_require__(10);
+var fails = __webpack_require__(3);
+var classof = __webpack_require__(11);
 
 var split = ''.split;
 
@@ -428,7 +428,7 @@ module.exports = function (input, PREFERRED_STRING) {
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var requireObjectCoercible = __webpack_require__(11);
+var requireObjectCoercible = __webpack_require__(12);
 
 // `ToObject` abstract operation
 // https://tc39.es/ecma262/#sec-toobject
@@ -442,7 +442,7 @@ module.exports = function (argument) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(6);
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(3);
 var createElement = __webpack_require__(38);
 
 // Thank's IE8 for his funny defineProperty
@@ -535,7 +535,7 @@ module.exports = function (argument) {
 
 /* eslint-disable es/no-symbol -- required for testing */
 var V8_VERSION = __webpack_require__(25);
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(3);
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
@@ -654,7 +654,7 @@ module.exports = {
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(10);
+var classof = __webpack_require__(11);
 
 // `IsArray` abstract operation
 // https://tc39.es/ecma262/#sec-isarray
@@ -668,7 +668,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(3);
 var wellKnownSymbol = __webpack_require__(9);
 var V8_VERSION = __webpack_require__(25);
 
@@ -712,11 +712,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMultiBarOption", function() { return createMultiBarOption; });
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_includes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_instance_filter__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
+/* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
 /* harmony import */ var _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -1121,7 +1121,7 @@ const createRadarOption = radarOptions => {
  */
 
 const createMultiOption = multiSeriesOption => {
-  var _context7, _context8;
+  var _context7, _context8, _context9;
 
   const {
     title = '',
@@ -1196,7 +1196,16 @@ const createMultiOption = multiSeriesOption => {
       orient: 'horizontal',
       ...(config.legend || {})
     },
-    grid: {
+    grid: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.grid) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context7 = config.grid).call(_context7, item => ({
+      top: title || data.length > 1 ? 40 : 16,
+      // 有标题或多于1个系列时top为40
+      left: 0,
+      right: 10,
+      bottom: 0,
+      containLabel: true,
+      ...defaultConfig.config.grid,
+      ...item
+    })) : {
       top: title || data.length > 1 ? 40 : 16,
       // 有标题或多于1个系列时top为40
       left: 0,
@@ -1206,7 +1215,7 @@ const createMultiOption = multiSeriesOption => {
       ...defaultConfig.config.grid,
       ...(config.grid || {})
     },
-    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context7 = config.xAxis).call(_context7, item => ({ ...getAxis(item.type || 'category'),
+    xAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.xAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context8 = config.xAxis).call(_context8, item => ({ ...getAxis(item.type || 'category'),
       ...item
     })) : {
       type: 'category',
@@ -1222,7 +1231,7 @@ const createMultiOption = multiSeriesOption => {
         ...(config.xAxis ? config.xAxis.splitLine : {})
       }
     },
-    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context8 = config.yAxis).call(_context8, item => ({ ...getAxis(item.type || 'value'),
+    yAxis: _babel_runtime_corejs3_core_js_stable_array_is_array__WEBPACK_IMPORTED_MODULE_3___default()(config.yAxis) ? _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context9 = config.yAxis).call(_context9, item => ({ ...getAxis(item.type || 'value'),
       ...item
     })) : {
       type: 'value',
@@ -1414,7 +1423,7 @@ var propertyIsEnumerableModule = __webpack_require__(37);
 var createPropertyDescriptor = __webpack_require__(14);
 var toIndexedObject = __webpack_require__(15);
 var toPrimitive = __webpack_require__(17);
-var has = __webpack_require__(12);
+var has = __webpack_require__(13);
 var IE8_DOM_DEFINE = __webpack_require__(19);
 
 // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -1473,7 +1482,7 @@ module.exports = function (it) {
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(3);
 
 var replacement = /#|\.prototype\./;
 
@@ -1628,7 +1637,7 @@ module.exports = entryVirtual('String').includes;
 
 var $ = __webpack_require__(4);
 var notARegExp = __webpack_require__(48);
-var requireObjectCoercible = __webpack_require__(11);
+var requireObjectCoercible = __webpack_require__(12);
 var correctIsRegExpLogic = __webpack_require__(58);
 
 // `String.prototype.includes` method
@@ -1659,7 +1668,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(5);
-var classof = __webpack_require__(10);
+var classof = __webpack_require__(11);
 var wellKnownSymbol = __webpack_require__(9);
 
 var MATCH = wellKnownSymbol('match');
