@@ -3,17 +3,17 @@
  * @param {any} config 全局的配置
  * @param {any} seriesItemConfig 系列配置
  */
-interface ExtraConfig {
-   config: any;
-   seriesItemConfig: any;
+declare interface ExtraConfig {
+   config: any
+   seriesItemConfig: any
 }
 
 /**
  * data类型接口
  */
- interface SingleSeriesItemData {
-   name: string;
-   value: number;
+declare interface SingleSeriesItemData {
+   name: string
+   value: number
 }
 
 /**
@@ -23,11 +23,11 @@ interface ExtraConfig {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
- interface SingleSeriesType {
-   title?: string|any;
-   data: any[];
-   colors: string[];
-   extraConfig?: ExtraConfig;
+declare interface SingleSeriesType {
+   title?: string | any
+   data: any[]
+   colors: string[]
+   extraConfig?: ExtraConfig
 }
 
 /**
@@ -38,12 +38,12 @@ interface ExtraConfig {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface SingleSeries {
-   title?: string|any;
-   type: string;
-   data: any[];
-   colors: string[];
-   extraConfig?: ExtraConfig;
+declare interface SingleSeries {
+   title?: string | any
+   type: string
+   data: any[]
+   colors: string[]
+   extraConfig?: ExtraConfig
 }
 
 /**
@@ -54,9 +54,9 @@ export interface SingleSeries {
  * @param {Array} radius 饼状图半径 ['内半径', '外半径']
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface SingleSeriesPieType extends SingleSeriesType {
-   data: SingleSeriesItemData[];
-   radius: string[];
+declare interface SingleSeriesPieType extends SingleSeriesType {
+   data: SingleSeriesItemData[]
+   radius: string[]
 }
 
 /**
@@ -66,8 +66,7 @@ export interface SingleSeriesPieType extends SingleSeriesType {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface SingleSeriesLineType extends SingleSeriesType {
-}
+declare interface SingleSeriesLineType extends SingleSeriesType {}
 
 /**
  * 柱状图配置
@@ -76,15 +75,14 @@ export interface SingleSeriesLineType extends SingleSeriesType {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface SingleSeriesBarType extends SingleSeriesType {
-}
+declare interface SingleSeriesBarType extends SingleSeriesType {}
 
 /**
  * 雷达图series data类型接口
  */
-interface RadarSeriesItemData {
-   name: string;
-   value: number[];
+declare interface RadarSeriesItemData {
+   name: string
+   value: number[]
 }
 
 /**
@@ -96,10 +94,10 @@ interface RadarSeriesItemData {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface SingleSeriesRadarType extends SingleSeriesType {
-   legend: string[];
-   indicator: {name: string;}[];
-   data: RadarSeriesItemData[];
+declare interface SingleSeriesRadarType extends SingleSeriesType {
+   legend: string[]
+   indicator: { name: string }[]
+   data: RadarSeriesItemData[]
 }
 
 /**
@@ -108,10 +106,10 @@ export interface SingleSeriesRadarType extends SingleSeriesType {
  * @param {string} name 系列名称，用于tooltip的显示，legend 的图例筛选
  * @param {Array} data series项，值格式：[「x」, 「y」, 「其他维度的值」, ...]
  */
-interface MultiSeriesItem {
-   type?: string;
-   name: string;
-   data: any[];
+declare interface MultiSeriesItem {
+   type?: string
+   name: string
+   data: any[]
 }
 
 /**
@@ -125,11 +123,11 @@ interface MultiSeriesItem {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-interface MultiSeriesType {
-   title?: string|any;
-   data: MultiSeriesItem[];
-   colors: string[];
-   extraConfig?: ExtraConfig;
+declare interface MultiSeriesType {
+   title?: string | any
+   data: MultiSeriesItem[]
+   colors: string[]
+   extraConfig?: ExtraConfig
 }
 
 /**
@@ -146,8 +144,8 @@ interface MultiSeriesType {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface MultiSeries extends MultiSeriesType{
-   type: string;
+declare interface MultiSeries extends MultiSeriesType {
+   type: string
 }
 
 /**
@@ -162,7 +160,7 @@ export interface MultiSeries extends MultiSeriesType{
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface MultiLineSeries extends MultiSeriesType {}
+declare interface MultiLineSeries extends MultiSeriesType {}
 
 /**
  * 多个柱状图的series的配置
@@ -176,4 +174,4 @@ export interface MultiLineSeries extends MultiSeriesType {}
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-export interface MultiBarSeries extends MultiSeriesType {}
+declare interface MultiBarSeries extends MultiSeriesType {}

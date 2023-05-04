@@ -1,14 +1,3 @@
-import {
-   SingleSeries,
-   SingleSeriesPieType,
-   SingleSeriesLineType,
-   SingleSeriesBarType,
-   SingleSeriesRadarType,
-   MultiSeries,
-   MultiLineSeries,
-   MultiBarSeries
-} from './interface'
-
 const formatTitle = (title) => (typeof title === 'string' ? { text: title } : title)
 
 const axisLine = {
