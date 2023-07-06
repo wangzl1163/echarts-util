@@ -10,12 +10,13 @@
 		"strictFunctionTypes": true,
 		"skipLibCheck": true,
 		"baseUrl": "./",
-		"types": [],
+		"types": [
+			"./index"
+		],
 		"noEmit": true,
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": [
-		"index.d.ts",
 		"src/**/*.ts"
 	]
 }

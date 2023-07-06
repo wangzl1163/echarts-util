@@ -104,13 +104,7 @@ export const initOption = (option: { config?: any; seriesItemConfig?: any }): vo
  * @param {SingleSeries} singleSeriesOption 单个series的配置
  */
 export const createOption = (singleSeriesOptions: SingleSeries): any => {
-   const {
-      title = '',
-      type = '',
-      data = [],
-      colors = [],
-      extraConfig: { config = {}, seriesItemConfig = {} } = {}
-   } = singleSeriesOptions
+   const { title = '', type = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = singleSeriesOptions
 
    const formattedTitle = formatTitle(title)
 
@@ -229,9 +223,7 @@ export const createLineOption = (lineOptions: SingleSeriesLineType): any => {
          trigger: 'axis',
          formatter: function (params) {
             const timeStr = params[0].value[0]
-            const valueStr = params
-               .map((param) => param.marker + param.seriesName + '：' + param.value[1])
-               .join('<br/>')
+            const valueStr = params.map((param) => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>')
 
             return `${timeStr}<br/>${valueStr}`
          },
@@ -387,13 +379,7 @@ export const createRadarOption = (radarOptions: SingleSeriesRadarType): any => {
  * @param multiSeriesOption 多个series的配置
  */
 export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
-   const {
-      title = '',
-      type = '',
-      data = [],
-      colors = [],
-      extraConfig: { config = {}, seriesItemConfig = {} } = {}
-   } = multiSeriesOption
+   const { title = '', type = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiSeriesOption
 
    const formattedTitle = formatTitle(title)
    const getAxis = (axisType) => {
@@ -435,13 +421,7 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
             if (dimensionNames.toString() === 'x,y') {
                const categoryStr = params[0].axisDim === 'x' ? params[0].value[0] : params[0].value[1]
                const valueStr = params
-                  .map(
-                     (param) =>
-                        param.marker +
-                        param.seriesName +
-                        '：' +
-                        (param.axisDim === 'x' ? param.value[1] : param.value[0])
-                  )
+                  .map((param) => param.marker + param.seriesName + '：' + (param.axisDim === 'x' ? param.value[1] : param.value[0]))
                   .join('<br/>')
 
                return `${categoryStr}<br/>${valueStr}`
@@ -462,71 +442,71 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
       },
       grid: Array.isArray(config.grid)
          ? config.grid.map((item) => ({
-              top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
-              left: 0,
-              right: 10,
-              bottom: 0,
-              containLabel: true,
-              ...defaultConfig.config.grid,
-              ...item
-           }))
+            top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+            left: 0,
+            right: 10,
+            bottom: 0,
+            containLabel: true,
+            ...defaultConfig.config.grid,
+            ...item
+         }))
          : {
-              top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
-              left: 0,
-              right: 10,
-              bottom: 0,
-              containLabel: true,
-              ...defaultConfig.config.grid,
-              ...(config.grid || {})
-           },
+            top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+            left: 0,
+            right: 10,
+            bottom: 0,
+            containLabel: true,
+            ...defaultConfig.config.grid,
+            ...(config.grid || {})
+         },
       xAxis: Array.isArray(config.xAxis)
          ? config.xAxis.map((item) => ({ ...getAxis(item.type || 'category'), ...item }))
          : {
-              type: 'category',
-              ...getAxis((config.xAxis || {}).type || 'category'),
-              ...defaultConfig.config.xAxis,
-              ...(config.xAxis || {}),
-              axisLine: {
-                 ...getAxis((config.xAxis || {}).type || 'category').axisLine,
-                 ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
-                 ...(config.xAxis ? config.xAxis.axisLine : {})
-              },
-              splitLine: {
-                 ...getAxis((config.xAxis || {}).type || 'category').splitLine,
-                 ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
-                 ...(config.xAxis ? config.xAxis.splitLine : {})
-              }
-           },
+            type: 'category',
+            ...getAxis((config.xAxis || {}).type || 'category'),
+            ...defaultConfig.config.xAxis,
+            ...(config.xAxis || {}),
+            axisLine: {
+               ...getAxis((config.xAxis || {}).type || 'category').axisLine,
+               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.axisLine : {}),
+               ...(config.xAxis ? config.xAxis.axisLine : {})
+            },
+            splitLine: {
+               ...getAxis((config.xAxis || {}).type || 'category').splitLine,
+               ...(defaultConfig.config.xAxis ? defaultConfig.config.xAxis.splitLine : {}),
+               ...(config.xAxis ? config.xAxis.splitLine : {})
+            }
+         },
       yAxis: Array.isArray(config.yAxis)
          ? config.yAxis.map((item) => ({ ...getAxis(item.type || 'value'), ...item }))
          : {
-              type: 'value',
-              ...getAxis((config.yAxis || {}).type || 'value'),
-              ...defaultConfig.config.yAxis,
-              ...(config.yAxis || {}),
-              axisLine: {
-                 ...getAxis((config.yAxis || {}).type || 'category').axisLine,
-                 ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
-                 ...(config.yAxis ? config.yAxis.axisLine : {})
-              },
-              splitLine: {
-                 ...getAxis((config.yAxis || {}).type || 'category').splitLine,
-                 ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
-                 ...(config.yAxis ? config.yAxis.splitLine : {})
-              }
-           }
+            type: 'value',
+            ...getAxis((config.yAxis || {}).type || 'value'),
+            ...defaultConfig.config.yAxis,
+            ...(config.yAxis || {}),
+            axisLine: {
+               ...getAxis((config.yAxis || {}).type || 'category').axisLine,
+               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.axisLine : {}),
+               ...(config.yAxis ? config.yAxis.axisLine : {})
+            },
+            splitLine: {
+               ...getAxis((config.yAxis || {}).type || 'category').splitLine,
+               ...(defaultConfig.config.yAxis ? defaultConfig.config.yAxis.splitLine : {}),
+               ...(config.yAxis ? config.yAxis.splitLine : {})
+            }
+         }
    }
    const handledSeries = data.map((item) => {
       const itemConfig =
          typeof seriesItemConfig === 'function'
             ? {
-                 ...defaultConfig.seriesItemConfig,
-                 ...seriesItemConfig(item)
-              }
+               ...defaultConfig.seriesItemConfig,
+               ...seriesItemConfig(item)
+            }
             : {
-                 ...defaultConfig.seriesItemConfig,
-                 ...seriesItemConfig
-              }
+               ...defaultConfig.seriesItemConfig,
+               ...seriesItemConfig
+            }
 
       return {
          name: item.name,
@@ -551,13 +531,8 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
  * 创建具有多个series的折线图的options
  * @param multiLineOption 多条折线的配置
  */
-export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
-   const {
-      title = '',
-      data = [],
-      colors = [],
-      extraConfig: { config = {}, seriesItemConfig = {} } = {}
-   } = multiLineOption
+export const createMultiLineOption = (multiLineOption: MultiLineSeries): any => {
+   const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiLineOption
 
    return createMultiOption({
       type: 'line',
@@ -566,13 +541,7 @@ export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
       colors: colors,
       extraConfig: {
          config: config,
-         seriesItemConfig:
-            typeof seriesItemConfig === 'function'
-               ? seriesItemConfig
-               : {
-                    symbol: 'none',
-                    ...seriesItemConfig
-                 }
+         seriesItemConfig: typeof seriesItemConfig === 'function' ? seriesItemConfig : { symbol: 'none', ...seriesItemConfig }
       }
    })
 }
@@ -581,13 +550,8 @@ export const createMultiLineOption = (multiLineOption: MultiLineSeries) => {
  * 创建具有多个series的柱状图的options
  * @param multiBarOptions 多个柱状图的配置
  */
-export const createMultiBarOption = (multiBarOptions: MultiBarSeries) => {
-   const {
-      title = '',
-      data = [],
-      colors = [],
-      extraConfig: { config = {}, seriesItemConfig = {} } = {}
-   } = multiBarOptions
+export const createMultiBarOption = (multiBarOptions: MultiBarSeries): any => {
+   const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiBarOptions
 
    return createMultiOption({
       type: 'bar',
@@ -609,8 +573,6 @@ export default class Option {
    private formatTitle = formatTitle
 
    private defaultConfig = defaultConfig
-
-   constructor() {}
 
    /**
     * 初始化echarts配置
@@ -785,12 +747,7 @@ export default class Option {
     * @param {SingleSeriesLineType} lineOptions 折线图的配置
     */
    createLineOption(lineOptions: SingleSeriesLineType): any {
-      const {
-         title = '',
-         data = [],
-         colors = [],
-         extraConfig: { config = {}, seriesItemConfig = {} } = {}
-      } = lineOptions
+      const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = lineOptions
 
       const option = {
          ...config,
@@ -799,9 +756,7 @@ export default class Option {
             trigger: 'axis',
             formatter: function (params) {
                const timeStr = params[0].value[0]
-               const valueStr = params
-                  .map((param) => param.marker + param.seriesName + '：' + param.value[1])
-                  .join('<br/>')
+               const valueStr = params.map((param) => param.marker + param.seriesName + '：' + param.value[1]).join('<br/>')
 
                return `${timeStr}<br/>${valueStr}`
             },
@@ -857,12 +812,7 @@ export default class Option {
     * @param {SingleSeriesBarType} barOptions 柱状图的配置
     */
    createBarOption(barOptions: SingleSeriesBarType): any {
-      const {
-         title = '',
-         data = [],
-         colors = [],
-         extraConfig: { config = {}, seriesItemConfig = {} } = {}
-      } = barOptions
+      const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = barOptions
 
       const option = {
          ...config,
@@ -962,13 +912,7 @@ export default class Option {
     * @param multiSeriesOption 多个series的配置
     */
    createMultiOption(multiSeriesOption: MultiSeries): any {
-      const {
-         title = '',
-         type = '',
-         data = [],
-         colors = [],
-         extraConfig: { config = {}, seriesItemConfig = {} } = {}
-      } = multiSeriesOption
+      const { title = '', type = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiSeriesOption
 
       const formattedTitle = this.formatTitle(title)
       const getAxis = (axisType: string) => {
@@ -1010,13 +954,7 @@ export default class Option {
                if (dimensionNames.toString() === 'x,y') {
                   const categoryStr = params[0].axisDim === 'x' ? params[0].value[0] : params[0].value[1]
                   const valueStr = params
-                     .map(
-                        (param) =>
-                           param.marker +
-                           param.seriesName +
-                           '：' +
-                           (param.axisDim === 'x' ? param.value[1] : param.value[0])
-                     )
+                     .map((param) => param.marker + param.seriesName + '：' + (param.axisDim === 'x' ? param.value[1] : param.value[0]))
                      .join('<br/>')
 
                   return `${categoryStr}<br/>${valueStr}`
@@ -1037,71 +975,65 @@ export default class Option {
          },
          grid: Array.isArray(config.grid)
             ? config.grid.map((item) => ({
-                 top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
-                 left: 0,
-                 right: 10,
-                 bottom: 0,
-                 containLabel: true,
-                 ...this.defaultConfig.config.grid,
-                 ...item
-              }))
+               top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+               left: 0,
+               right: 10,
+               bottom: 0,
+               containLabel: true,
+               ...this.defaultConfig.config.grid,
+               ...item
+            }))
             : {
-                 top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
-                 left: 0,
-                 right: 10,
-                 bottom: 0,
-                 containLabel: true,
-                 ...this.defaultConfig.config.grid,
-                 ...(config.grid || {})
-              },
+               top: title || data.length > 1 ? 40 : 16, // 有标题或多于1个系列时top为40
+               left: 0,
+               right: 10,
+               bottom: 0,
+               containLabel: true,
+               ...this.defaultConfig.config.grid,
+               ...(config.grid || {})
+            },
          xAxis: Array.isArray(config.xAxis)
             ? config.xAxis.map((item) => ({ ...getAxis(item.type || 'category'), ...item }))
             : {
-                 type: 'category',
-                 ...getAxis((config.xAxis || {}).type || 'category'),
-                 ...this.defaultConfig.config.xAxis,
-                 ...(config.xAxis || {}),
-                 axisLine: {
-                    ...getAxis((config.xAxis || {}).type || 'category').axisLine,
-                    ...(this.defaultConfig.config.xAxis ? this.defaultConfig.config.xAxis.axisLine : {}),
-                    ...(config.xAxis ? config.xAxis.axisLine : {})
-                 },
-                 splitLine: {
-                    ...getAxis((config.xAxis || {}).type || 'category').splitLine,
-                    ...(this.defaultConfig.config.xAxis ? this.defaultConfig.config.xAxis.splitLine : {}),
-                    ...(config.xAxis ? config.xAxis.splitLine : {})
-                 }
-              },
+               type: 'category',
+               ...getAxis((config.xAxis || {}).type || 'category'),
+               ...this.defaultConfig.config.xAxis,
+               ...(config.xAxis || {}),
+               axisLine: {
+                  ...getAxis((config.xAxis || {}).type || 'category').axisLine,
+                  ...(this.defaultConfig.config.xAxis ? this.defaultConfig.config.xAxis.axisLine : {}),
+                  ...(config.xAxis ? config.xAxis.axisLine : {})
+               },
+               splitLine: {
+                  ...getAxis((config.xAxis || {}).type || 'category').splitLine,
+                  ...(this.defaultConfig.config.xAxis ? this.defaultConfig.config.xAxis.splitLine : {}),
+                  ...(config.xAxis ? config.xAxis.splitLine : {})
+               }
+            },
          yAxis: Array.isArray(config.yAxis)
             ? config.yAxis.map((item) => ({ ...getAxis(item.type || 'value'), ...item }))
             : {
-                 type: 'value',
-                 ...getAxis((config.yAxis || {}).type || 'value'),
-                 ...this.defaultConfig.config.yAxis,
-                 ...(config.yAxis || {}),
-                 axisLine: {
-                    ...getAxis((config.yAxis || {}).type || 'category').axisLine,
-                    ...(this.defaultConfig.config.yAxis ? this.defaultConfig.config.yAxis.axisLine : {}),
-                    ...(config.yAxis ? config.yAxis.axisLine : {})
-                 },
-                 splitLine: {
-                    ...getAxis((config.yAxis || {}).type || 'category').splitLine,
-                    ...(this.defaultConfig.config.yAxis ? this.defaultConfig.config.yAxis.splitLine : {}),
-                    ...(config.yAxis ? config.yAxis.splitLine : {})
-                 }
-              }
+               type: 'value',
+               ...getAxis((config.yAxis || {}).type || 'value'),
+               ...this.defaultConfig.config.yAxis,
+               ...(config.yAxis || {}),
+               axisLine: {
+                  ...getAxis((config.yAxis || {}).type || 'category').axisLine,
+                  ...(this.defaultConfig.config.yAxis ? this.defaultConfig.config.yAxis.axisLine : {}),
+                  ...(config.yAxis ? config.yAxis.axisLine : {})
+               },
+               splitLine: {
+                  ...getAxis((config.yAxis || {}).type || 'category').splitLine,
+                  ...(this.defaultConfig.config.yAxis ? this.defaultConfig.config.yAxis.splitLine : {}),
+                  ...(config.yAxis ? config.yAxis.splitLine : {})
+               }
+            }
       }
       const handledSeries = data.map((item) => {
          const itemConfig =
             typeof seriesItemConfig === 'function'
-               ? {
-                    ...this.defaultConfig.seriesItemConfig,
-                    ...seriesItemConfig(item)
-                 }
-               : {
-                    ...this.defaultConfig.seriesItemConfig,
-                    ...seriesItemConfig
-                 }
+               ? { ...this.defaultConfig.seriesItemConfig, ...seriesItemConfig(item) }
+               : { ...this.defaultConfig.seriesItemConfig, ...seriesItemConfig }
 
          return {
             name: item.name,
@@ -1126,13 +1058,8 @@ export default class Option {
     * 创建具有多个series的折线图的options
     * @param multiLineOption 多条折线的配置
     */
-   createMultiLineOption(multiLineOption: MultiLineSeries) {
-      const {
-         title = '',
-         data = [],
-         colors = [],
-         extraConfig: { config = {}, seriesItemConfig = {} } = {}
-      } = multiLineOption
+   createMultiLineOption(multiLineOption: MultiLineSeries): any {
+      const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiLineOption
 
       return this.createMultiOption({
          type: 'line',
@@ -1141,13 +1068,7 @@ export default class Option {
          colors: colors,
          extraConfig: {
             config: config,
-            seriesItemConfig:
-               typeof seriesItemConfig === 'function'
-                  ? seriesItemConfig
-                  : {
-                       symbol: 'none',
-                       ...seriesItemConfig
-                    }
+            seriesItemConfig: typeof seriesItemConfig === 'function' ? seriesItemConfig : { symbol: 'none', ...seriesItemConfig }
          }
       })
    }
@@ -1156,13 +1077,8 @@ export default class Option {
     * 创建具有多个series的柱状图的options
     * @param multiBarOptions 多个柱状图的配置
     */
-   createMultiBarOption(multiBarOptions: MultiBarSeries) {
-      const {
-         title = '',
-         data = [],
-         colors = [],
-         extraConfig: { config = {}, seriesItemConfig = {} } = {}
-      } = multiBarOptions
+   createMultiBarOption(multiBarOptions: MultiBarSeries): any {
+      const { title = '', data = [], colors = [], extraConfig: { config = {}, seriesItemConfig = {} } = {} } = multiBarOptions
 
       return this.createMultiOption({
          type: 'bar',
