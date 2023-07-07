@@ -4,8 +4,8 @@
    "description": "简化 echarts 配置的工具。",
    "main": "dist/echarts-util.js",
    "scripts": {
-      "build:dev": "webpack --config build/webpack.dev.config.js",
-      "build:prod": "webpack --config build/webpack.prod.config.js",
+      "build:dev": "webpack --config build/webpack.dev.config.js && node build/copyTypeFile.js",
+      "build:prod": "webpack --config build/webpack.prod.config.js && node build/copyTypeFile.js",
       "publish-all": "npm run build:dev && npm run build:prod && npm publish"
    },
    "dependencies": {
@@ -14,6 +14,8 @@
    },
    "devDependencies": {
       "@babel/core": "^7.14.3",
+      "@babel/plugin-proposal-class-properties": "^7.13.0",
+      "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
       "@babel/plugin-transform-runtime": "^7.14.3",
       "@babel/preset-typescript": "^7.13.0",
       "@typescript-eslint/eslint-plugin": "^4.24.0",
