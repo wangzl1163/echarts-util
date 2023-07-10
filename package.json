@@ -1,6 +1,6 @@
 {
    "name": "echarts-util",
-   "version": "1.3.0-beta.0",
+   "version": "1.4.0-beta.0",
    "description": "简化 echarts 配置的工具。",
    "main": "dist/echarts-util.js",
    "scripts": {
