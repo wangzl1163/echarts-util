@@ -5,7 +5,7 @@ const banner = require('../license.js')
 module.exports = {
    context: path.resolve(__dirname, '../'),
    entry: {
-      main: './src/main.ts'
+      main: './src/index.ts'
    },
    output: {
       library: 'echarts-util',

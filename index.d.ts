@@ -1,3 +1,20 @@
+declare interface DefaultConfig {
+   config: {
+      color: string[];
+      title: Record<string, string | number | Record<string, string | number>>;
+      textStyle: Record<string, string>;
+      legend: Record<string, string | number | Record<string, string | number>>;
+      tooltip?: Record<string, string | number>;
+      xAxis?: Record<string, string | number | boolean> & { splitLine: Record<string, string | number | boolean>; axisLine: Record<string, string | number | boolean>; };
+      yAxis?: Record<string, string | number | boolean> & { splitLine: Record<string, string | number | boolean>; axisLine: Record<string, string | number | boolean>; };
+      grid?: Record<string, string | number>;
+   },
+   seriesItemConfig: {
+      label: { show: boolean; },
+      hoverAnimation: boolean;
+   }
+}
+
 /**
  * echarts的更丰富的配置
  * @param {any} config 全局的配置
@@ -66,7 +83,7 @@ declare interface SingleSeriesPieType extends SingleSeriesType {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-declare interface SingleSeriesLineType extends SingleSeriesType {}
+declare interface SingleSeriesLineType extends SingleSeriesType { }
 
 /**
  * 柱状图配置
@@ -75,7 +92,7 @@ declare interface SingleSeriesLineType extends SingleSeriesType {}
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-declare interface SingleSeriesBarType extends SingleSeriesType {}
+declare interface SingleSeriesBarType extends SingleSeriesType { }
 
 /**
  * 雷达图series data类型接口
@@ -160,7 +177,7 @@ declare interface MultiSeries extends MultiSeriesType {
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-declare interface MultiLineSeries extends MultiSeriesType {}
+declare interface MultiLineSeries extends MultiSeriesType { }
 
 /**
  * 多个柱状图的series的配置
@@ -174,4 +191,4 @@ declare interface MultiLineSeries extends MultiSeriesType {}
  * @param {Array} colors series颜色
  * @param {ExtraConfig} extraConfig echarts支持的其他配置
  */
-declare interface MultiBarSeries extends MultiSeriesType {}
+declare interface MultiBarSeries extends MultiSeriesType { }

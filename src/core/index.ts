@@ -14,7 +14,7 @@ const splitLine = {
 }
 
 // 默认配置
-const defaultConfig = {
+const defaultConfig: DefaultConfig = {
    config: {
       color: ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
       title: {
@@ -391,7 +391,8 @@ export const createMultiOption = (multiSeriesOption: MultiSeries): any => {
          splitLine: {
             show: axisType === 'value',
             ...splitLine
-         }
+         },
+         boundaryGap: false
       }
 
       if (axisType === 'category') {
@@ -572,7 +573,7 @@ export default class Option {
 
    private formatTitle = formatTitle
 
-   private defaultConfig = defaultConfig
+   private defaultConfig: DefaultConfig = defaultConfig
 
    /**
     * 初始化echarts配置
@@ -924,7 +925,8 @@ export default class Option {
             splitLine: {
                show: axisType === 'value',
                ...splitLine
-            }
+            },
+            boundaryGap: false
          }
 
          if (axisType === 'category') {

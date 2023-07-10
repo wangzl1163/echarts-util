@@ -5,7 +5,7 @@
    "main": "dist/echarts-util.js",
    "scripts": {
       "build:dev": "webpack --config build/webpack.dev.config.js && node build/copyTypeFile.js",
-      "build:prod": "webpack --config build/webpack.prod.config.js && node build/copyTypeFile.js",
+      "build:prod": "webpack --config build/webpack.prod.config.js && tsc",
       "publish-all": "npm run build:dev && npm run build:prod && npm publish"
    },
    "dependencies": {

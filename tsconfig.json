@@ -13,8 +13,11 @@
 		"types": [
 			"./index"
 		],
-		"noEmit": true,
-		"forceConsistentCasingInFileNames": true
+		"noEmit": false,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"declarationDir": "dist",
+		"emitDeclarationOnly": true,
 	},
 	"include": [
 		"src/**/*.ts"

@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.2.0-beta.0 - 07/07/2023
+ * @license :echarts-util - V1.3.0-beta.0 - 10/07/2023
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2023 @wangzl1163; Licensed MIT
  */
@@ -5221,7 +5221,8 @@ const createMultiOption = multiSeriesOption => {
       }, axisLine),
       splitLine: objectSpread2_default()({
         show: axisType === 'value'
-      }, splitLine)
+      }, splitLine),
+      boundaryGap: false
     };
     if (axisType === 'category') {
       var _context5;
@@ -5672,7 +5673,8 @@ class core_Option {
         }, axisLine),
         splitLine: objectSpread2_default()({
           show: axisType === 'value'
-        }, splitLine)
+        }, splitLine),
+        boundaryGap: false
       };
       if (axisType === 'category') {
         var _context14;
@@ -5808,7 +5810,7 @@ class core_Option {
     });
   }
 }
-// CONCATENATED MODULE: ./src/main.ts
+// CONCATENATED MODULE: ./src/index.ts
 
 
 function createUtil() {
