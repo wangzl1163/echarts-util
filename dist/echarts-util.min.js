@@ -1,5 +1,5 @@
 /*!
- * @license :echarts-util - V1.4.0-beta.0 - 10/07/2023
+ * @license :echarts-util - V1.4.0-beta.2 - 11/07/2023
  * https://github.com/wangzl1163/echarts-util
  * Copyright (c) 2023 @wangzl1163; Licensed MIT
  */
