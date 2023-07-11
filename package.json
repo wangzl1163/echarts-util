@@ -3,6 +3,7 @@
    "version": "1.4.0-beta.1",
    "description": "简化 echarts 配置的工具。",
    "main": "dist/echarts-util.js",
+   "types": "dist/index.d.ts",
    "scripts": {
       "build:dev": "webpack --config build/webpack.dev.config.js && node build/copyTypeFile.js",
       "build:prod": "webpack --config build/webpack.prod.config.js && tsc",
