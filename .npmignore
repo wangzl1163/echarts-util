@@ -8,6 +8,7 @@ babel.config.json
 .browserslistrc
 .gitignore
 .prettierrc.json
+tsconfig.json
 
 #build tools
 build
