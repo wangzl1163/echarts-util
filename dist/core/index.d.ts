@@ -1,4 +1,4 @@
-/// <reference types="./index" />
+/// <reference types="./types/index" />
 /**
  * 初始化echarts配置
  * 注意：grid 等部分配置项在此配置不起作用
